@@ -13,7 +13,7 @@ class Usuarios extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id('idUsuario');
             $table->string('nombre');
             $table->string('email');
@@ -21,8 +21,6 @@ class Usuarios extends Migration
             $table->string('active');
             $table->string('token');
             $table->longText('fotografia');
-            $table->string('apellidoM');
-            $table->string('telefono');
             $table->foreignId('idRol')->nullable()->constrained()->references('idRol')->on('rol');
             $table->foreignId('idPersona')->nullable()->constrained()->references('idPersona')->on('persona');
             $table->timestamps();
@@ -36,6 +34,6 @@ class Usuarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('users');
     }
 }

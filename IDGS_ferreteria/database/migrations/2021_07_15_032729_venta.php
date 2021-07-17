@@ -20,7 +20,7 @@ class Venta extends Migration
             $table->string('fecha');
             $table->Double('iva');
             $table->Double('total');
-            $table->foreignId('idUsuario')->nullable()->constrained()->references('idUsuario')->on('usuario');
+            $table->foreignId('idUsuario')->nullable()->constrained()->references('idUsuario')->on('users');
             $table->foreignId('idCliente')->nullable()->constrained()->references('idCliente')->on('cliente');
             $table->timestamps();
         });

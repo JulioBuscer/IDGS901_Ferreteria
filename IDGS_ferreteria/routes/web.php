@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SiteController@index');
-Route::get('/catalogo-productos', 'SiteController@catalogo_productos');
+Route::group(['middleware'=>['auth']], function(){
+    Route::get('/','SiteController@home')->name('home');
+});
 
+Route::get('/login','SiteController@login')->name('login');
+Route::post('/login','SiteController@loginPost');
+Route::get('/logout','SiteController@logout');
 
-Route::get('/login', 'UsersController@login');
-
-Route::get('/agregar-producto', 'ProductosController@agregar');
+//*Route::get('/', 'SiteController@index');
+//Route::get('/catalogo-productos', 'SiteController@catalogo_productos');
+//Route::get('/login', 'UsersController@login');
+//Route::get('/agregar-producto', 'ProductosController@agregar');
