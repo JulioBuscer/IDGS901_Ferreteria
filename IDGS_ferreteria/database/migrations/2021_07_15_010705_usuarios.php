@@ -13,7 +13,7 @@ class Usuarios extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        /*Schema::create('users', function (Blueprint $table) {
             $table->id('idUsuario');
             $table->string('nombre');
             $table->string('email');
@@ -24,7 +24,7 @@ class Usuarios extends Migration
             $table->foreignId('idRol')->nullable()->constrained()->references('idRol')->on('rol');
             $table->foreignId('idPersona')->nullable()->constrained()->references('idPersona')->on('persona');
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -34,6 +34,6 @@ class Usuarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        // Schema::dropIfExists('users');
     }
 }

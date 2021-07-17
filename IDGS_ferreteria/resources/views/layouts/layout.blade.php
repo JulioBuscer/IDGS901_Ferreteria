@@ -146,11 +146,20 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
+                                        @guest
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('login')}}">
                                                 Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
+                                        @else
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                href="{{URL::to('logout')}}">
+                                                Cerrar Sesión
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        @endguest
+
                                         </li>
                                     </ul>
                                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Redirect;
 
 class SiteController extends Controller
 {
@@ -37,8 +38,8 @@ class SiteController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            echo var_dump(Auth::user());
-            //return redirect()->route('home');
+            // echo var_dump(Auth::user());
+            return Redirect::to('/');
         } else {
             return Redirect()->route('login')->withErrors(
                 ["password"=>"Las credenciales no coinciden"]);
