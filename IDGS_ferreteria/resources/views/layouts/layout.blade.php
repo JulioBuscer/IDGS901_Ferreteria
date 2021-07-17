@@ -119,29 +119,36 @@
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{asset('#')}}">
+                                                href="{{URL::to('/')}}">
                                                 Inicio
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{asset('#')}}">
+                                                href="{{URL::to('login')}}">
                                                 Catálogo
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{asset('#')}}">
+                                                href="{{URL::to('login')}}">
                                                 ¿Quiénes Somos?
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{asset('#')}}">
+                                                href="{{URL::to('login')}}">
                                                 Contacto
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                href="{{URL::to('login')}}">
+                                                Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
