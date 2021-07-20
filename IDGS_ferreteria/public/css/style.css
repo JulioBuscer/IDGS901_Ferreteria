@@ -87,3 +87,10 @@
 .show>.btn-color-2.dropdown-toggle:focus {
     box-shadow: 0 0 0 .2rem rgba(182, 25, 5, 0.5)
 }
+
+/* slider */
+
+.carousel-item img{
+    min-height: 400px;
+    max-height: 600px;
+}
