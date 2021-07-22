@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Compra extends Migration
+class CreateCompra extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,14 @@ class Compra extends Migration
     public function up()
     {
         Schema::create('compra', function (Blueprint $table) {
-            $table->id('idCompra');
+            $table->id();
             $table->Double('total');
             $table->string('fechaPedido');
             $table->string('fechaEntrega');
             $table->string('estatus');
             $table->string('descripcion');
-            $table->foreignId('idProveedor')->nullable()->constrained()->references('idProveedor')->on('proveedor');
-            $table->foreignId('idDetalleCompra')->nullable()->constrained()->references('idDetalleCompra')->on('detalleCompra');
+            $table->foreignId('idProveedor')->nullable()->constrained()->references('id')->on('proveedor');
+            $table->foreignId('idDetalleCompra')->nullable()->constrained()->references('id')->on('detalle_compra');
             $table->timestamps();
         });
     }

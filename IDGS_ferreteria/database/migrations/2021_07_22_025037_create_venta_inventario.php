@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Rol extends Migration
+class CreateVentaInventario extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class Rol extends Migration
      */
     public function up()
     {
-        Schema::create('rol', function (Blueprint $table) {
-            $table->id('idRol');
-            $table->string('nombre');
-            $table->string('descripcion');
+        Schema::create('venta_inventario', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('idVenta')->nullable()->constrained()->references('id')->on('venta');
+            $table->foreignId('idProducto')->nullable()->constrained()->references('id')->on('producto');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class Rol extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rol');
+        Schema::dropIfExists('venta_inventario');
     }
 }

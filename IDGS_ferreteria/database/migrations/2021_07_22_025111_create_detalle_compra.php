@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Persona extends Migration
+class CreateDetalleCompra extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class Persona extends Migration
      */
     public function up()
     {
-        Schema::create('persona', function (Blueprint $table) {
-            $table->id('idPersona');
-            $table->string('nombre');
-            $table->string('apellidoP');
-            $table->string('apellidoM');
-            $table->string('telefono');
+        Schema::create('detalle_compra', function (Blueprint $table) {
+            $table->id();
+            $table->string('cantidad');
+            $table->foreignId('idProducto')->nullable()->constrained()->references('id')->on('producto');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class Persona extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persona');
+        Schema::dropIfExists('detalle_compra');
     }
 }
