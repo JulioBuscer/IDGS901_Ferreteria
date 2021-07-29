@@ -17,10 +17,16 @@ use Inertia\Inertia;
 
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/','SiteController@home')->name('home');
+
+    // Agregamos los recursos de proveedores
+    Route::resource('proveedores','ProveedoresController');
 });
 Route::get('/login','SiteController@login')->name('login');
 Route::post('/login','SiteController@loginPost');
 Route::get('/logout','SiteController@logout');
+
+
+
 
 /*Route::get('/', function () {
     return Inertia::render('Welcome', [
