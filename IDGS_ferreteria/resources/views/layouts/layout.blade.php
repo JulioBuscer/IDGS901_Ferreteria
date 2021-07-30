@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
+    <script >const Route_esp = "{{URL::asset('')}}" </script>
+
+    <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -14,6 +17,8 @@
     <!-- Material Design Bootstrap -->
     <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    
+    
     <style>
 
     </style>
@@ -249,6 +254,7 @@
     <!-- Footer -->
     <!-- SCRIPTS -->
     <!-- JQuery -->
+
     <script type="text/javascript" src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
@@ -259,7 +265,7 @@
     <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
     <script type="text/javascript">
     /* WOW.js init */
-    new WOW().init();
+    // new WOW().init();
     // Tooltips Initialization
     $(function() {
         $('[data-toggle="tooltip"]').tooltip()
@@ -271,7 +277,7 @@
     });
 
     // SideNav Initialization
-    $(".button-collapse").sideNav();
+    // $(".button-collapse").sideNav();
     </script>
 
 </body>
