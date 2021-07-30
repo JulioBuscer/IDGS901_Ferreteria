@@ -20,6 +20,7 @@ Route::group(['middleware'=>['auth']], function(){
 
     // Agregamos los recursos de proveedores
     Route::resource('proveedores','ProveedoresController');
+    
 });
 Route::get('/login','SiteController@login')->name('login');
 Route::post('/login','SiteController@loginPost');

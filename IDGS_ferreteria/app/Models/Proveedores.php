@@ -20,4 +20,5 @@ class Proveedores extends Model
         "RFC",
         "active"
     ];
+
 }

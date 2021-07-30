@@ -16,8 +16,10 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
+
+        $modelo = Proveedores::find(0);
         $table = Proveedores::all();
-        return view('proveedores.index ', compact('table'));
+        return view('proveedores.index ', compact('modelo', 'table'));
     }
 
     /**
@@ -27,7 +29,8 @@ class ProveedoresController extends Controller
      */
     public function create()
     {
-        return view('proveedores.create');
+        // $table = Proveedores::all();
+        // return view('proveedores.create ', compact('table'));
     }
 
     /**
@@ -44,8 +47,7 @@ class ProveedoresController extends Controller
             'email' => 'required|min:5',
             'representante' => 'required|min:5',
             'telefono' => 'required|min:5',
-            'RFC' => 'required|min:5',
-            'active' => 'required|min:5'
+            'rfc' => 'required|min:5',
         ]);
 
         $mProveedores = new Proveedores();
@@ -54,9 +56,10 @@ class ProveedoresController extends Controller
         $mProveedores->email = $request->email;
         $mProveedores->representante = $request->representante;
         $mProveedores->telefono = $request->telefono;
-        $mProveedores->RFC = $request->RFC;
+        $mProveedores->RFC = $request->rfc;
         $mProveedores->active = 1;
         $mProveedores->save();
+
 
         $request->session()->flash('message', 'Proveedor Agregado');
         return FacadesRedirect::to('proveedores');
@@ -71,8 +74,8 @@ class ProveedoresController extends Controller
     public function show($id)
     {
         $modelo = Proveedores::find($id);
-
-        return view('proveedores.show', compact('modelo'));
+        $table = Proveedores::all();
+        return view('proveedores.show ', compact('modelo', 'table'));
     }
 
     /**
@@ -136,4 +139,6 @@ class ProveedoresController extends Controller
         session()->flash('message', 'Proveedor Eliminado');
         return FacadesRedirect::to('proveedores');
     }
+
+
 }
