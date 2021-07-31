@@ -16,8 +16,9 @@ use Inertia\Inertia;
 */
 
 Route::group(['middleware'=>['auth']], function(){
-    Route::get('/','SiteController@home')->name('home');
+    
 });
+Route::get('/','SiteController@home')->name('home');
 Route::get('/login','SiteController@login')->name('login');
 Route::post('/login','SiteController@loginPost');
 Route::get('/logout','SiteController@logout');

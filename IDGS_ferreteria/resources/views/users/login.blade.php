@@ -69,14 +69,14 @@
                         {{Form::open(["url"=>"/login"])}}
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            {{Form::label('email','Correo electrónico')}}
-                            {{Form::email('email', Request::old('email'),
-                                ["class"=>"form-control", "required" => true ] ) }}
+                            {{Form::email('email', Request::old('email'),["class"=>"form-control", "required" => true ] ) }}
+                            {{Form::label('email','Correo electrónico',["class"=>"form-label"])}}
                         </div>
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            {{Form::label('password','Contraseña')}}
+
                             {{Form::password('password', ["class"=>"form-control full-width", "required" => true ] )}}
+                            {{Form::label('password','Contraseña',["class"=>"form-label"])}}
                         </div>
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
