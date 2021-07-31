@@ -24,7 +24,7 @@ function verCategorias(id, nombre, descripcion) {
 
 // FUNCIONES PARA PRODUCTOS 
 
-function editarProductos(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria) {
+function editarProductos(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria, idProveedor, costoProducto) {
     $('#idProd').val(id);
     $('#nombreProducto0').val(nombre);
     $('#txtDescripcion0').val(descripcion);
@@ -32,14 +32,17 @@ function editarProductos(id, nombre, descripcion, precio, cantidad, unidad, foto
     $('#txtCantidad0').val(cantidad);
     $('#txtUnidad0').val(unidad);
     $('#imgFoto20').attr("src", "data:image/jpeg;base64," + foto).width(220).height(280);
+    $('#textarea0').val(foto);
     $('#slcCategoria10').val(idCategoria);
+    $('#precioCompra0').val(costoProducto);
+    $('#slcProvProd0').val(idProveedor);
 
     var ruta = Route_esp + "Productos/" + id
 
-    $('#edtProd').attr('action', ruta);
+    $('#editCat').attr('action', ruta);
 }
 
-function verProductos(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria) {
+function verProductos(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria, idProveedor, costoProducto) {
     $('#nombreProducto1').val(nombre);
     $('#txtDescripcion1').val(descripcion);
     $('#txtPrecio1').val(precio);
@@ -47,6 +50,8 @@ function verProductos(id, nombre, descripcion, precio, cantidad, unidad, foto, i
     $('#txtUnidad1').val(unidad);
     $('#imgFoto21').attr("src", "data:image/jpeg;base64," + foto).width(220).height(280);
     $('#slcCategoria11').val(idCategoria);
+    $('#precioCompra1').val(costoProducto);
+    $('#slcProvProd1').val(idProveedor);
 
 
 }

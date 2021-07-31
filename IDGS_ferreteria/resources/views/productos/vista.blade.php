@@ -32,6 +32,7 @@
                     <th>Fotografia</th>
                     <th>Id</th>
                     <th>Nombre Producto</th>
+                    <th>Precio</th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
                     <th>Unidad</th>
@@ -44,18 +45,19 @@
                     @forelse($table as $row)
                     <tr align="center">
                         <td><img height="100" width="100" src="data:image/jpeg;base64,{{$row->fotografia}}"></td>
-                        <td>{{$row->id}}</td>
+                        <td>{{$row->idProducto}}</td>
                         <td>{{$row->nombre}}</td>
+                        <td>${{$row->precio}}</td>
                         <td>{{$row->descripcion}}</td>
                         <td>{{$row->cantidad}}</td>
                         <td>{{$row->unidad}}</td>
                         <td>{{$row->idCategoria}}</td>
-                        <td>proveedor</td>
+                        <td>{{$row->idProveedor}}</td>
                         <td>
-                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal1" onclick="verProductos('{{$row->id}}','{{$row->nombre}}','{{$row->descripcion}}','{{$row->precio}}','{{$row->cantidad}}','{{$row->unidad}}','{{$row->fotografia}}','{{$row->idCategoria}}')"> <i class="fas fa-eye"></i> </button>
-                            <button class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#exampleModal" onclick="editarProductos('{{$row->id}}','{{$row->nombre}}','{{$row->descripcion}}','{{$row->precio}}','{{$row->cantidad}}','{{$row->unidad}}','{{$row->fotografia}}','{{$row->idCategoria}}')"> <i class="fas fa-edit"></i> </button>
+                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal1" onclick="verProductos('{{$row->idProducto}}','{{$row->nombre}}','{{$row->descripcion}}','{{$row->precio}}','{{$row->cantidad}}','{{$row->unidad}}','{{$row->fotografia}}','{{$row->idCategoria}}','{{$row->idProveedor}}','{{$row->precioCompra}}')"> <i class="fas fa-eye"></i> </button>
+                            <button class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#exampleModal" onclick="editarProductos('{{$row->idProducto}}','{{$row->nombre}}','{{$row->descripcion}}','{{$row->precio}}','{{$row->cantidad}}','{{$row->unidad}}','{{$row->fotografia}}','{{$row->idCategoria}}','{{$row->idProveedor}}','{{$row->precioCompra}}')"> <i class="fas fa-edit"></i> </button>
 
-                            {{Form::open(["url" =>route('Productos.destroy', $row->id)])}}
+                            {{Form::open(["url" =>route('Productos.destroy', $row->idProducto)])}}
                             {{ Form::hidden('_method','DELETE')}}
                             <button type="submit" class="btn btn-danger"> <i class="fas fa-trash"></i> </button>
                             {{Form::close()}}
@@ -80,11 +82,11 @@
                     <th>Fotografia</th>
                     <th>Id</th>
                     <th>Nombre Producto</th>
+                    <th>Precio</th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
                     <th>Unidad</th>
                     <th>Categoria</th>
-                    <th>Proveedor</th>
                     <th>Acciones</th>
                 </thead>
                 <tbody>
@@ -93,16 +95,16 @@
                         <td><img height="100" width="100" src="data:image/jpeg;base64,{{$row2->fotografia}}"></td>
                         <td>{{$row2->id}}</td>
                         <td>{{$row2->nombre}}</td>
+                        <td>$ {{$row2->precio}}</td>
                         <td>{{$row2->descripcion}}</td>
                         <td>{{$row2->cantidad}}</td>
                         <td>{{$row2->unidad}}</td>
                         <td>{{$row2->idCategoria}}</td>
-                        <td>proveedor</td>
                         <td>
-                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal1" onclick="verProductos('{{$row2->id}}','{{$row2->nombre}}','{{$row2->descripcion}}','{{$row2->precio}}','{{$row2->cantidad}}','{{$row2->unidad}}','{{$row2->fotografia}}','{{$row2->idCategoria}}')"> <i class="fas fa-eye"></i> </button>
+                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal1" onclick="verProductos('{{$row2->id}}','{{$row2->nombre}}','{{$row2->descripcion}}','{{$row2->precio}}','{{$row2->cantidad}}','{{$row2->unidad}}','{{$row2->fotografia}}','{{$row2->idCategoria}}','{{$row2->idProveedor}}','{{$row2->precioCompra}}')"> <i class="fas fa-eye"></i> </button>
 
-                            {{Form::open(["url" =>route('Productos.destroy', $row->id)])}}
-                            {{ Form::hidden('_method','DELETE')}}
+                            {{Form::open(["url" =>route('Productos.edit', $row2->id)])}}
+                            {{ Form::hidden('_method','GET')}}
                             <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> </button>
                             {{Form::close()}}
                         </td>
@@ -118,23 +120,21 @@
         </div>
 
 
-
-
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Categoria</h5>
                         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" id=edtProd>
+                    <form method="POST" id=editCat>
                         <!-- {{Form::model(["route"=>["Categorias.update"]])}} -->
                         <div class="modal-body">
                             <!-- -->
                             <input name="_method" type="hidden" value="PUT">
                             @csrf
                             <div class="row">
-                                <input name="idCat" style="display:none;" id="idProd" />
+                                <input name="idProd" style="display:none;" id="idProd" />
                                 <div class="col form-outline m-2">
                                     <input type="text" name="nombreProducto0" id="nombreProducto0" class="form-control" />
                                     <label class="form-label" for="nombreProducto0">Nombre Producto</label>
@@ -174,6 +174,29 @@
                                     <label class="form-label" for="txtUnidad0">Unidad</label>
                                 </div>
                             </div>
+                            <div class="row">
+
+                            <div class="col form-outline  m-2">
+                                <input type="number" name="precioCompra0" id="precioCompra0" class="form-control" />
+                                <label class="form-label" for="precioCompra0">Precio Compra</label>
+                            </div>
+                            <div class="col form-outline  m-2">
+                                <center>
+                                    <select name="slcProvProd0" id="slcProvProd0" class="form-select" aria-label="Default select example">
+                                        <option disabled selected>Proveedor</option>
+                                        @forelse($prov as $slc)
+                                        <option value="{{$slc->id}}">{{$slc->empresa}}</option>
+                                        @empty
+                                        <tr>
+                                            <option value="0">No hay Registros</option>
+                                        </tr>
+
+                                        @endforelse
+                                    </select>
+                                </center>
+                            </div>
+
+                        </div>
 
                             <div class="row">
                                 <div class="col form-outline  m-2">
@@ -207,9 +230,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
 
         <!-- modal para mostrar detalle -->
@@ -262,6 +282,29 @@
                                 <label class="form-label" for="txtUnidad1">Unidad</label>
                             </div>
                         </div>
+                        <div class="row">
+
+                            <div class="col form-outline  m-2">
+                                <input type="number" name="precioCompra1" id="precioCompra1" class="form-control active" />
+                                <label class="form-label" for="precioCompra1">Precio Compra</label>
+                            </div>
+                            <div class="col form-outline  m-2">
+                                <center>
+                                    <select name="slcProvProd1" id="slcProvProd1" class="form-select" aria-label="Default select example">
+                                        <option disabled selected>Proveedor</option>
+                                        @forelse($prov as $slc)
+                                        <option value="{{$slc->id}}">{{$slc->empresa}}</option>
+                                        @empty
+                                        <tr>
+                                            <option value="0">No hay Registros</option>
+                                        </tr>
+
+                                        @endforelse
+                                    </select>
+                                </center>
+                            </div>
+
+                        </div>
 
                         <div class="row">
                             <div class="col form-outline  m-2">
@@ -292,7 +335,6 @@
                 <hr class="hr-245">
                 {{Html::ul($errors->all())}}
                 {{Form::open(["url"=>"/Productos"])}}
-                <!-- Email input -->
                 <div class="row">
                     <div class="col form-outline m-2">
                         <input type="text" name="nombreProducto" id="nombreProducto" class="form-control" />
@@ -321,7 +363,7 @@
 
                     <div class="col form-outline m-2">
                         <input type="number" name="txtPrecio" id="txtPrecio" class="form-control" />
-                        <label class="form-label" for="txtPrecio">Precio</label>
+                        <label class="form-label" for="txtPrecio">Precio Venta</label>
                     </div>
 
                     <div class="col form-outline m-2">
@@ -332,6 +374,29 @@
                         <input type="text" name="txtUnidad" id="txtUnidad" class="form-control" />
                         <label class="form-label" for="txtUnidad">Unidad</label>
                     </div>
+                </div>
+                <div class="row">
+
+                    <div class="col form-outline  m-2">
+                        <input type="number" name="precioCompra" id="precioCompra" class="form-control" />
+                        <label class="form-label" for="precioCompra">Precio Compra</label>
+                    </div>
+                    <div class="col form-outline  m-2">
+                        <center>
+                            <select name="slcProvProd" id="slcProvProd" class="form-select" aria-label="Default select example">
+                                <option disabled selected>Proveedor</option>
+                                @forelse($prov as $slc)
+                                <option value="{{$slc->id}}">{{$slc->empresa}}</option>
+                                @empty
+                                <tr>
+                                    <option value="0">No hay Registros</option>
+                                </tr>
+
+                                @endforelse
+                            </select>
+                        </center>
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -354,9 +419,7 @@
                     </div>
 
                 </div>
-                <!-- Submit button -->
                 <div class="text-right">
-                    <!-- <button type="button" href="{{ url('Categorias')}}" class="btn btn-primary ">Nueva categoria</button> -->
                     <button type="submit" class="btn btn-color-2 ">Registrar</button>
                 </div>
 
