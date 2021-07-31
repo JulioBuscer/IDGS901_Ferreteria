@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DetalleCompra extends Migration
+class CreateRol extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class DetalleCompra extends Migration
      */
     public function up()
     {
-        Schema::create('detalleCompra', function (Blueprint $table) {
-            $table->id('idDetalleCompra');
-            $table->string('cantidad');
-            $table->foreignId('idProducto')->nullable()->constrained()->references('idProducto')->on('producto');
+        Schema::create('rol', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class DetalleCompra extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalleCompra');
+        Schema::dropIfExists('rol');
     }
 }

@@ -140,26 +140,29 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
+
+
                                         <li class="nav-item">
+                                            @guest
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('login')}}">
-                                                ¿Quiénes Somos?
+                                                Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
-                                        </li>
-                                        <li class="nav-item">
+                                            @else
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                Contacto
+                                                href="{{URL::to('logout')}}">
+                                                Cerrar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
-                                        </li>
+
+                                            @if(Auth::user()->id_rol == 2)
                                         <li class="nav-item">
                                         
                                         @guest
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('login')}}">
-                                                Iniciar Sesión
+                                                ¿Quiénes Somos?
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         @else

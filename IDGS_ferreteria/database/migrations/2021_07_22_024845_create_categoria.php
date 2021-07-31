@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Categoria extends Migration
+class CreateCategoria extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class Categoria extends Migration
     public function up()
     {
         Schema::create('categoria', function (Blueprint $table) {
-            $table->id('idCategoria');
+            $table->id();
             $table->string('nombre');
             $table->string('descripcion');
             $table->timestamps();
