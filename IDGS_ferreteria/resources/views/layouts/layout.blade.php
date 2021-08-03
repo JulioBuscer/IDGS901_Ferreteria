@@ -63,11 +63,18 @@
 
                                     <!-- Grid column -->
                                     <div class="col-md-6 col-lg-7 text-center text-md-right">
+                                        @guest
+                                            <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold"
+                                                href="">
+                                                Bienvenido
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        @else
                                         <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{asset('#')}}"
                                             id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="https://mdbootstrap.com/img/new/avatars/2.jpg"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" /> Usuario
+                                            <img src="data:image/jpeg;base64,{{\Auth::user()->fotografia}}"
+                                                class="rounded-circle" height="25" alt="" loading="lazy" /> {{\Auth::user()->name}}
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu"
                                             aria-labelledby="navbarDropdownMenuLink">
@@ -75,9 +82,11 @@
                                                 <a class="dropdown-item" href="{{asset('#')}}">Perfil</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="{{asset('#')}}">Salir</a>
+                                                <a class="dropdown-item" href="{{URL::to('logout')}}">Salir</a>
                                             </li>
                                         </ul>
+
+                                        @endguest
                                         <!-- Facebook -->
                                         <a class="fb-ic ml-0 px-4" href="{{asset('https://wwww.facebook.com')}}">
 
@@ -136,33 +145,20 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
+
+
                                         <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                ¿Quiénes Somos?
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                Contacto
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
+                                        
                                         @guest
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('login')}}">
                                                 Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         @else
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('logout')}}">
-                                                Cerrar Sesión
-                                                <span class="sr-only">(current)</span>
-                                            </a>
+                                            @if( \Auth::user()->id_rol == 1 )
+                                            @else
+                                            @endif
                                         @endguest
 
                                         </li>

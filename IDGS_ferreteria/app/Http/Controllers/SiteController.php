@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Redirect;
+use App\Models\VentaInventario;
+use Illuminate\Support\Facades\DB;
+
 
 class SiteController extends Controller
 {
@@ -15,7 +18,14 @@ class SiteController extends Controller
     }
 
     public function home(){
-        return view('site.index');
+        $toProducts = "SELECT vi.idProducto as idProductoVenta, p.*, SUM(vi.cantidad) AS TotalVentas
+        FROM venta_inventario as vi INNER JOIN producto as p ON p.id = vi.idProducto
+        GROUP BY vi.idProducto
+        ORDER BY SUM(vi.cantidad) DESC
+        LIMIT 0 , 2";
+        $products = Db::select($toProducts);
+
+        return view('site.index', compact('products'));
     }
 
     public function login(){
@@ -39,7 +49,11 @@ class SiteController extends Controller
 
         if (Auth::attempt($credentials)) {
             // echo var_dump(Auth::user());
-            return Redirect::to('/');
+            if(Auth::user()->active=='1'){
+                return Redirect::to('/');
+            }else{
+                echo ('Ya no estás en el sistema');
+            } 
         } else {
             return Redirect()->route('login')->withErrors(
                 ["password"=>"Las credenciales no coinciden"]);

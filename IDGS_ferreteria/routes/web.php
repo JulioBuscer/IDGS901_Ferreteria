@@ -31,11 +31,6 @@ Route::put('/Categorias', 'CategoriasController@update');
 Route::get('/login', 'SiteController@login')->name('login');
 Route::post('/login', 'SiteController@loginPost');
 Route::get('/logout', 'SiteController@logout');
-Route::get('/login', 'SiteController@login')->name('login');
-Route::post('/login', 'SiteController@loginPost');
-Route::get('/logout', 'SiteController@logout');
-
-
 
 
 /*Route::get('/', function () {
