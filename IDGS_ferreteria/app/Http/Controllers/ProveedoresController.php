@@ -19,6 +19,7 @@ class ProveedoresController extends Controller
 
         $modelo = Proveedores::find(0);
         $table = Proveedores::all();
+        
         return view('proveedores.index ', compact('modelo', 'table'));
     }
 
