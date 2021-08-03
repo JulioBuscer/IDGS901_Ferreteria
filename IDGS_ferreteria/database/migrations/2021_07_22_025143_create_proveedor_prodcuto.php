@@ -13,10 +13,11 @@ class CreateProveedorProdcuto extends Migration
      */
     public function up()
     {
-        Schema::create('proveedor_prodcuto', function (Blueprint $table) {
+        Schema::create('proveedor_producto', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idProducto')->nullable()->constrained()->references('id')->on('producto');
             $table->foreignId('idProveedor')->nullable()->constrained()->references('id')->on('proveedor');
+            $table->double('precioCompra')->nullable();
             $table->timestamps();
         });
     }
