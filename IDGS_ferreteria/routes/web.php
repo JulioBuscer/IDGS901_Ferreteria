@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::resource('/Productos', 'ProductosController');
 Route::resource('/Categorias', 'CategoriaController');
+Route::resource('/Catalogo', 'CatalogoProductos');
 Route::put('/Categorias', 'CategoriasController@update');
 Route::get('/login', 'SiteController@login')->name('login');
 Route::post('/login', 'SiteController@loginPost');
