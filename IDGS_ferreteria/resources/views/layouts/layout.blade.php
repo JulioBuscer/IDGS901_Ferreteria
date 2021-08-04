@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
+    <script >const Route_esp = "{{URL::asset('')}}" </script>
+
+    <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -14,6 +17,8 @@
     <!-- Material Design Bootstrap -->
     <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    
+    
     <style>
 
     </style>
@@ -58,11 +63,18 @@
 
                                     <!-- Grid column -->
                                     <div class="col-md-6 col-lg-7 text-center text-md-right">
+                                        @guest
+                                            <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold"
+                                                href="">
+                                                Bienvenido
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        @else
                                         <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{asset('#')}}"
                                             id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="https://mdbootstrap.com/img/new/avatars/2.jpg"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" /> Usuario
+                                            <img src="data:image/jpeg;base64,{{\Auth::user()->fotografia}}"
+                                                class="rounded-circle" height="25" alt="" loading="lazy" /> {{\Auth::user()->name}}
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu"
                                             aria-labelledby="navbarDropdownMenuLink">
@@ -70,9 +82,11 @@
                                                 <a class="dropdown-item" href="{{asset('#')}}">Perfil</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="{{asset('#')}}">Salir</a>
+                                                <a class="dropdown-item" href="{{URL::to('logout')}}">Salir</a>
                                             </li>
                                         </ul>
+
+                                        @endguest
                                         <!-- Facebook -->
                                         <a class="fb-ic ml-0 px-4" href="{{asset('https://wwww.facebook.com')}}">
 
@@ -134,38 +148,17 @@
 
 
                                         <li class="nav-item">
-                                            @guest
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                        
+                                        @guest
+                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('login')}}">
                                                 Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
+                                        @else
+                                            @if( \Auth::user()->id_rol == 1 )
                                             @else
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('logout')}}">
-                                                Cerrar Sesión
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-
-                                            @if(Auth::user()->id_rol == 2)
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                ¿Quiénes Somos?
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        @endif
-
-                                        @if(Auth::user()->id_rol == 1 )
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                Contacto
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        @endif
+                                            @endif
                                         @endguest
 
                                         </li>
@@ -257,6 +250,7 @@
     <!-- Footer -->
     <!-- SCRIPTS -->
     <!-- JQuery -->
+
     <script type="text/javascript" src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
@@ -267,7 +261,7 @@
     <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
     <script type="text/javascript">
     /* WOW.js init */
-    new WOW().init();
+    // new WOW().init();
     // Tooltips Initialization
     $(function() {
         $('[data-toggle="tooltip"]').tooltip()
@@ -279,7 +273,7 @@
     });
 
     // SideNav Initialization
-    $(".button-collapse").sideNav();
+    // $(".button-collapse").sideNav();
     </script>
 
 </body>

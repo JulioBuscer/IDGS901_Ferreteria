@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Proveedores;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,12 +16,22 @@ use Inertia\Inertia;
 |
 */
 
-Route::group(['middleware'=>['auth']], function(){
-    Route::get('/','SiteController@home')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', 'SiteController@home')->name('home');
+
+    // Agregamos los recursos de proveedores
+    Route::resource('proveedores', 'ProveedoresController');
+
+    // Agregamos los recursos de compras
+    Route::resource('compras', 'ComprasController');
 });
-Route::get('/login','SiteController@login')->name('login');
-Route::post('/login','SiteController@loginPost');
-Route::get('/logout','SiteController@logout');
+Route::resource('/Productos', 'ProductosController');
+Route::resource('/Categorias', 'CategoriaController');
+Route::put('/Categorias', 'CategoriasController@update');
+Route::get('/login', 'SiteController@login')->name('login');
+Route::post('/login', 'SiteController@loginPost');
+Route::get('/logout', 'SiteController@logout');
+
 
 /*Route::get('/', function () {
     return Inertia::render('Welcome', [
