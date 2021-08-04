@@ -24,11 +24,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Agregamos los recursos de compras
     Route::resource('compras', 'ComprasController');
+    Route::resource('/Productos', 'ProductosController');
+    Route::resource('/Categorias', 'CategoriaController');
+    Route::put('/Categorias', 'CategoriasController@update');
+    
 });
-Route::resource('/Productos', 'ProductosController');
-Route::resource('/Categorias', 'CategoriaController');
 Route::resource('/Catalogo', 'CatalogoProductos');
-Route::put('/Categorias', 'CategoriasController@update');
+
+
 Route::get('/login', 'SiteController@login')->name('login');
 Route::post('/login', 'SiteController@loginPost');
 Route::get('/logout', 'SiteController@logout');
