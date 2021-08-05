@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
-    <script >const Route_esp = "{{URL::asset('')}}" </script>
+    <script>
+        const Route_esp = "{{URL::asset('')}}"
+    </script>
 
     <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
@@ -17,12 +19,12 @@
     <!-- Material Design Bootstrap -->
     <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    
-    
-    <style>
 
-    </style>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 
 <body class="homepage-v1 hidden-sn white-skin animated">
@@ -49,8 +51,7 @@
                                     <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
                                         <div class="input-group mb-0">
                                             <div class="form-outline">
-                                                <input id="search-focus" type="search" id="form1"
-                                                    class="form-control" />
+                                                <input id="search-focus" type="search" id="form1" class="form-control" />
                                                 <label class="form-label" for="form1">Buscar</label>
                                             </div>
                                             <button type="button" class="btn btn-primary">
@@ -64,20 +65,15 @@
                                     <!-- Grid column -->
                                     <div class="col-md-6 col-lg-7 text-center text-md-right">
                                         @guest
-                                            <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold"
-                                                href="">
-                                                Bienvenido
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        @else
-                                        <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{asset('#')}}"
-                                            id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <img src="data:image/jpeg;base64,{{\Auth::user()->fotografia}}"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" /> {{\Auth::user()->name}}
+                                        <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold" href="">
+                                            Bienvenido
+                                            <span class="sr-only">(current)</span>
                                         </a>
-                                        <ul class="dropdown-menu dropdown-menu"
-                                            aria-labelledby="navbarDropdownMenuLink">
+                                        @else
+                                        <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{asset('#')}}" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                            <img src="data:image/jpeg;base64,{{\Auth::user()->fotografia}}" class="rounded-circle" height="25" alt="" loading="lazy" /> {{\Auth::user()->name}}
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <li>
                                                 <a class="dropdown-item" href="{{asset('#')}}">Perfil</a>
                                             </li>
@@ -124,44 +120,51 @@
                             <div class="container">
                                 <a class="navbar-brand font-weight-bold" href="{{asset('#')}}">
                                 </a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4"
-                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('/')}}">
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold" href="{{URL::to('/')}}">
                                                 Inicio
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold" href="{{URL::to('login')}}">
                                                 Catálogo
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
 
 
-                                        <li class="nav-item">
-                                        
                                         @guest
-                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
+                                        <li class="nav-item">
+
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold" href="{{URL::to('login')}}">
                                                 Iniciar Sesión
                                                 <span class="sr-only">(current)</span>
                                             </a>
-                                        @else
-                                            @if( \Auth::user()->id_rol == 1 )
-                                            @else
-                                            @endif
-                                        @endguest
-
                                         </li>
+                                        @else
+                                        @if( \Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
+                                        <li>
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold" href="{{URL::to('proveedores')}}">
+                                                Proveedores
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold" href="{{URL::to('compras')}}">
+                                                Compras
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+
+                                        @else
+                                        @endif
+                                        @endguest
                                     </ul>
                                 </div>
                             </div>
@@ -234,9 +237,7 @@
                         <strong>Ubicación</strong>
                     </h6>
                     <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d658.1815936246556!2d-101.58184840878059!3d21.063180624056905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842b974c3471c735%3A0xf39f762b9db6af2!2sBiblioteca%20Universidad%20Tecnol%C3%B3gica%20de%20Le%C3%B3n!5e0!3m2!1ses-419!2smx!4v1625026867144!5m2!1ses-419!2smx"
-                        width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d658.1815936246556!2d-101.58184840878059!3d21.063180624056905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842b974c3471c735%3A0xf39f762b9db6af2!2sBiblioteca%20Universidad%20Tecnol%C3%B3gica%20de%20Le%C3%B3n!5e0!3m2!1ses-419!2smx!4v1625026867144!5m2!1ses-419!2smx" width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -259,22 +260,25 @@
     </script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+
     <script type="text/javascript">
-    /* WOW.js init */
-    // new WOW().init();
-    // Tooltips Initialization
-    $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+        /* WOW.js init */
+        // new WOW().init();
+        // Tooltips Initialization
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').material_select();
-    });
+        // Material Select Initialization
+        $(document).ready(function() {
+            $('.mdb-select').material_select();
+        });
 
-    // SideNav Initialization
-    // $(".button-collapse").sideNav();
+        // SideNav Initialization
+        // $(".button-collapse").sideNav();
     </script>
+
+    <!-- Select2 -->
 
 </body>
 

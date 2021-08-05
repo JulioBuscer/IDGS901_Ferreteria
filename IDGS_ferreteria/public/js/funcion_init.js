@@ -85,3 +85,9 @@ function actualizarFotoProducto() {
         fr.readAsDataURL(fileChooser.files[0]);
     }
 }
+
+//Select2
+
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});

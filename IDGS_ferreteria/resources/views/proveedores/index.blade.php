@@ -28,7 +28,7 @@
     <div class="tab-content" id="ex2-content">
         <!-- Activos -->
         <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
-            <h2 class="card-title text-left">PROVEEDORES ACTIVOS</h2>
+            <h2 class="card-title text-left">Proveedores Activos</h2>
             <hr class="hr-245">
             <table class="table text-justify">
                 <thead class="table-dark text-center">
@@ -128,7 +128,7 @@
         </div>
         <!-- Inactivos -->
         <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
-            <h2 class="card-title text-left">PROVEEDORES INACTIVOS</h2>
+            <h2 class="card-title text-left">Proveedores Inactivos</h2>
             <hr class="hr-245">
             <table class="table text-justify">
                 <thead class="table-dark text-center">
@@ -153,13 +153,12 @@
                         <td>{{$row->RFC}}</td>
                         <td>{{$row->direccion}}</td>
                         <td>
-
+                            @if( \Auth::user()->id_rol == 1)
                             {{Form::open(["url"=>route('proveedores.destroy',$row->id)])}}
                             {{Form::hidden('_method','DELETE')}}
-                            <button class="btn btn-primary"> <i class="fas fa-eye"></i> </button>
-                            <a href=""><button class="btn btn-success"> <i class="fas fa-edit"></i> </button></a>
                             <button type="submit" class="btn btn-danger" /> <i class='fas fa-trash'></i> </button>
                             {{Form::close()}}
+                            @endif
                         </td>
                     </tr>
                     @endif
@@ -175,7 +174,7 @@
 
         <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
             <div class="card-body">
-                <h2 class="card-title text-left">Productos registro</h2>
+                <h2 class="card-title text-left">Proveedores Registro</h2>
                 <hr class="hr-245">
                 <!-- Importamos el formulario para registrar un prveedor -->
                 @include('proveedores.create')
