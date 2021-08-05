@@ -104,7 +104,7 @@
                         @else
                         <div class="col-4 form-outline">
                             <input type="number" min="1" max="{{$row->cantidad}}" name="quantity" value="1"
-                                id="quantity" class="form-control" />
+                                class="form-control" />
                             <label class="form-label" for="quantity">Cantidad</label>
                         </div>
                         @endguest

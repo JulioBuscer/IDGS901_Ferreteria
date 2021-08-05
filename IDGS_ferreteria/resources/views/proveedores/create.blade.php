@@ -20,7 +20,7 @@
     <div class="col form-outline m-2">
         {{Form::text('telefono',Request::old('telefono'),["class"=>"form-control"])}}
         {{Form::label('telefono','Telefono',["class"=>"form-label"])}}
-        
+
     </div>
     <div class="col form-outline m-2">
         {{Form::text('rfc',Request::old('rfc'),["class"=>"form-control"])}}
@@ -31,5 +31,8 @@
         {{Form::label('direccion','Direccion',["class"=>"form-label"])}}
     </div>
 </div>
-{{Form::submit('Registrar Proveedor',["class"=>"btn btn-success"])}}
+<div class="text-right">
+    {{Form::submit('Registrar',["class"=>"btn btn-color-2"])}}
+</div>
+
 {{Form::close()}}

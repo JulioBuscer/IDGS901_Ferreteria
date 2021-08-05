@@ -7,15 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
-    <script>
-    const Route_esp = "{{URL::asset('')}}"
-    </script>
 
     <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+
     <!-- Material Design Bootstrap -->
     <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
@@ -33,12 +32,12 @@
     <header>
         <!-- Sidebar navigation -->
         <div class="row">
-            <div class="col-4 bg-color1">
+            <div class="col-3 d-flex align-items-center justify-content-center bg-color1 ">
                 <img src="{{asset('img/logo.png')}}" class="nav-bar-logo">
                 <span class="h1 ">Ferreteria</span>
             </div>
             <!-- Navbar -->
-            <div class="col-8">
+            <div class="col-9">
                 <div class="row">
                     <div class="col-12">
                         <div style="background-color: #fff; height: 10vh;">
@@ -90,6 +89,7 @@
                                         </ul>
 
                                         @endguest
+
                                         <!-- Facebook -->
                                         <a class="fb-ic ml-0 px-4" href="{{asset('https://wwww.facebook.com')}}">
 
@@ -122,6 +122,7 @@
                     </div>
                 </div>
                 <div class="row">
+
                     <div class="col-12">
                         <nav class="navbar bg-color2 navbar-expand-md navbar-dark" style="height: 10vh;">
                             <div class="container">
@@ -141,9 +142,10 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
+
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
+                                                href="{{URL::to('Catalogo')}}">
                                                 Catálogo
                                                 <span class="sr-only">(current)</span>
                                             </a>
@@ -156,23 +158,26 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
-                                        @else
+
+                                        @endguest
+                                        <!--                                         
+                                        @if(!Cart::isEmpty())
                                         <li>
-                                            @if (!Cart::isEmpty())
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                                data-mdb-toggle="modal" data-mdb-target="#modalCart">
                                                 <i class="fas fa-shopping-cart"> ({{Cart::getTotalQuantity()}})</i>
                                                 <span class="sr-only">(current)</span>
                                             </a>
-                                            @else
+                                        </li>
+                                        @else
+                                        <li>
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                                data-mdb-toggle="modal" data-mdb-target="#modalCart">
                                                 <i class="fas fa-shopping-cart"> (0)</i>
                                                 <span class="sr-only">(current)</span>
                                             </a>
-                                            @endif
                                         </li>
-                                        @endguest
+                                        @endif -->
                                     </ul>
                                 </div>
                             </div>
@@ -185,10 +190,21 @@
         </div>
     </header>
     <!-- Navigation -->
+    <section class="border p-4 d-flex justify-content-center mb-4">
+        <div id="basic" class="form-outline" style="width: 22rem">
+            <input type="text" id="form1" class="form-control autocomplete-input focused" role="combobox"
+                aria-expanded="false" aria-owns="autocomplete-dropdown-591396" aria-haspoup="true" autocomplete="true">
+            <label class="form-label autocomplete-label active" for="form1" style="margin-left: 0px;">Example
+                label</label>
+            <div class="form-notch">
+                <div class="form-notch-leading" style="width: 9px;"></div>
+                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                <div class="form-notch-trailing"></div>
+            </div>
+        </div>
+    </section>
     @yield('content')
     <!-- Main Container -->
-
-    <!-- Footer -->
 
     <footer class="bg-color1 page-footer text-center text-md-left white-text pt-0 mt-5 flex-end">
         <br>
@@ -270,6 +286,7 @@
     </script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/modules/mdb-autocomplete.min.js')}}"></script>
 </body>
 
 </html>

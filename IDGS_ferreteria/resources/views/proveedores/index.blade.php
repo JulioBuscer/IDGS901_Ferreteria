@@ -13,13 +13,16 @@
     <!-- Tabs navs -->
     <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1" role="tab" aria-controls="ex3-tabs-1" aria-selected="true">Activos</a>
+            <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1" role="tab"
+                aria-controls="ex3-tabs-1" aria-selected="true">Activos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#ex3-tabs-2" role="tab" aria-controls="ex3-tabs-2" aria-selected="false">Inactivos</a>
+            <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#ex3-tabs-2" role="tab"
+                aria-controls="ex3-tabs-2" aria-selected="false">Inactivos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-3" role="tab" aria-controls="ex3-tabs-3" aria-selected="false">Registro</a>
+            <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-3" role="tab"
+                aria-controls="ex3-tabs-3" aria-selected="false">Registro</a>
         </li>
     </ul>
     <!-- Tabs navs -->
@@ -28,7 +31,7 @@
     <div class="tab-content" id="ex2-content">
         <!-- Activos -->
         <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
-            <h2 class="card-title text-left">PROVEEDORES ACTIVOS</h2>
+            <h2 class="card-title text-left">Proveedores Activos</h2>
             <hr class="hr-245">
             <table class="table text-justify">
                 <thead class="table-dark text-center">
@@ -55,22 +58,27 @@
                             <!-- Consultar -->
                             <span class="col">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#showModal{{$loop->index}}">
+                                <button type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                                    data-mdb-target="#showModal{{$loop->index}}">
                                     <i class="fas fa-eye"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal top fade" id="showModal{{$loop->index}}" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="false">
+                                <div class="modal top fade" id="showModal{{$loop->index}}" tabindex="-1"
+                                    aria-labelledby="showModalLabel" aria-hidden="true" data-mdb-backdrop="true"
+                                    data-mdb-keyboard="false">
                                     <div class="modal-dialog modal-xl  modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="showModalLabel">Vista Proveedor</h5>
-                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 @include('proveedores.show',$modelo=$row)
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-mdb-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -81,24 +89,29 @@
                             <!-- Editar -->
                             <span class="col">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#editModal{{$loop->index}}">
+                                <button type="button" class="btn btn-success" data-mdb-toggle="modal"
+                                    data-mdb-target="#editModal{{$loop->index}}">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal top fade" id="editModal{{$loop->index}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="false">
+                                <div class="modal top fade" id="editModal{{$loop->index}}" tabindex="-1"
+                                    aria-labelledby="editModalLabel" aria-hidden="true" data-mdb-backdrop="true"
+                                    data-mdb-keyboard="false">
                                     <div class="modal-dialog modal-xl  modal-dialog-centered">
                                         <div class="modal-content">
 
                                             {{Form::model($modelo,["route"=>["proveedores.update",$row->id], "method"=>"PUT"])}}
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editModalLabel">Editar Proveedor</h5>
-                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 @include('proveedores.edit',$modelo=$row)
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-mdb-dismiss="modal">
                                                     Close
                                                 </button>
                                                 {{Form::submit('Save changes',["class"=>"btn btn-primary"])}}
@@ -128,7 +141,7 @@
         </div>
         <!-- Inactivos -->
         <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
-            <h2 class="card-title text-left">PROVEEDORES INACTIVOS</h2>
+            <h2 class="card-title text-left">Proveedores Inactivos</h2>
             <hr class="hr-245">
             <table class="table text-justify">
                 <thead class="table-dark text-center">
@@ -174,12 +187,10 @@
         <!-- Registro -->
 
         <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
-            <div class="card-body">
-                <h2 class="card-title text-left">Productos registro</h2>
-                <hr class="hr-245">
-                <!-- Importamos el formulario para registrar un prveedor -->
-                @include('proveedores.create')
-            </div>
+            <h2 class="card-title text-left">Proveedores Registro</h2>
+            <hr class="hr-245">
+            <!-- Importamos el formulario para registrar un prveedor -->
+            @include('proveedores.create')
         </div>
     </div>
     <!-- Tabs content -->

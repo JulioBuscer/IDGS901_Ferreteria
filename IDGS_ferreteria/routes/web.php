@@ -24,12 +24,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('compras', 'ComprasController');
     Route::resource('/Productos', 'ProductosController');
     Route::resource('/Categorias', 'CategoriaController');
-    Route::resource('/Catalogo', 'CatalogoProductos');
+    
     Route::resource('cart', 'CartController');
     
     Route::resource('/Venta', 'SalesController');
 });
 
+Route::resource('/Catalogo', 'CatalogoProductos');
 Route::get('/', 'SiteController@home')->name('home');
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/login', 'UsersController@loginPost');
