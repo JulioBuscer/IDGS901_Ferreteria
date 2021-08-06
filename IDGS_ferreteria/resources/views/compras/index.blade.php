@@ -31,22 +31,20 @@
         <!-- Tabs content -->
         <div class="tab-content" id="ex2-content">
             <!-- Activos -->
-           
+
             <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
                 <h2 class="card-title text-left">Proveedores Activos</h2>
                 <hr class="hr-245">
                 <div class="col form-outline  m-2">
-
-                    <input list="brow" class="form-control" type="text" name="client">
-                    <datalist id="brow">
-
-                        @forelse($proveedores as $proveedor)
-                            <option value="{{ $proveedor->empresa }}">
-                            @empty
-                            <option value="0">No hay Registros</option>
-                        @endforelse
-                    </datalist>
-                    <label class="form-label" for="form1">Cliente</label>
+                    {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
+                    {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}
+                    {!! Form::select('selectProveedor', $proveedores, null, ['class' => 'form-control', 'id' => 'selectProveedor', 'onchange' => '', 'required']) !!}
+                    {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
+                    @push('scripts')
+                        <script>
+                            $('#selectProveedor').select2({});
+                        </script>
+                    @endpush
                 </div>
             </div>
             <!-- Inactivos -->

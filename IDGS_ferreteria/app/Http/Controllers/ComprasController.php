@@ -17,9 +17,9 @@ class ComprasController extends Controller
     public function index()
     {
         $modelo = ProductoModel::find(0);
-        $proveedores = Proveedores::all();
+        $proveedores = Proveedores::pluck('empresa', 'id', 'email')->prepend('selecciona un proveedor');
         $producto = ProductoModel::pluck('nombre', 'id', 'precio');
-        
+
         return view('compras.index ', compact('modelo', 'proveedores', 'producto'));
     }
 

@@ -3,7 +3,6 @@
 @section('content')
 
     @if (Session::has('message'))
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             Swal.fire({
                 position: 'top-end',
@@ -14,8 +13,7 @@
             })
         </script>
     @endif
-    @if (sizeof($errors)>0)
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (sizeof($errors) > 0)
         <script>
             Swal.fire({
                 icon: 'error',
@@ -30,7 +28,7 @@
     <div class="m-5">
 
         <!-- Tabs navs -->
-        <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+        <ul class=" nav nav-tabs d-flex align-items-center justify-content-center mb-3 " id="ex1" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1" role="tab"
                     aria-controls="ex3-tabs-1" aria-selected="true">Activos</a>
@@ -47,12 +45,12 @@
         <!-- Tabs navs -->
 
         <!-- Tabs content -->
-        <div class="tab-content" id="ex2-content">
+        <div class="tab-content d-flex align-items-center justify-content-center mb-3" id="ex2-content">
             <!-- Activos -->
             <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
                 <h2 class="card-title text-left">Proveedores Activos</h2>
                 <hr class="hr-245">
-                <table class="table text-justify">
+                <table class="table text-justify responsive">
                     <thead class="table-dark text-center">
                         <th>PROVEEDOR</th>
                         <th>REPRESENTANTE</th>
@@ -98,7 +96,7 @@
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-mdb-dismiss="modal">
-                                                                Close
+                                                                <i class="fas fa-eye-slash"></i>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -130,11 +128,15 @@
                                                             @include('proveedores.edit',$modelo=$row)
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
+                                                            <button type="button" class="btn btn-danger"
                                                                 data-mdb-dismiss="modal">
-                                                                Close
+                                                                <i class='fas fa-ban'></i>
                                                             </button>
-                                                            {{ Form::submit('Save changes', ['class' => 'btn btn-primary']) }}
+
+                                                            <button type="submit" class="btn btn-success" />
+                                                            <i class='fas fa-edit'></i>
+                                                            </button>
+                                                            {{-- {{ Form::submit('Guardar cambios', ['class' => 'btn btn-success']) }} --}}
                                                         </div>
                                                     </div>
                                                     {{ Form::close() }}
@@ -189,9 +191,9 @@
                                     <td>
                                         @if (\Auth::user()->id_rol == 1)
                                             {{ Form::model($modelo, ['route' => ['proveedores.update', $row->id], 'method' => 'PUT']) }}
-                                            {{-- {{ Form::open(['url' => route('proveedores.update', $row->id)]) }} --}}
                                             {{ Form::hidden('_method', 'PUT') }}
-                                            <button type="submit" class="btn btn-success" /> <i class='fas fa-reply'></i>
+                                            <button type="submit" class="btn btn-warning" />
+                                            <i class='fas fa-undo'></i>
                                             </button>
                                             {{ Form::close() }}
                                         @endif
@@ -209,12 +211,10 @@
             <!-- Registro -->
 
             <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
-                <div class="card-body">
-                    <h2 class="card-title text-left">Proveedores Registro</h2>
-                    <hr class="hr-245">
-                    <!-- Importamos el formulario para registrar un prveedor -->
-                    @include('proveedores.create')
-                </div>
+                <h2 class="card-title text-left">Proveedores Registro</h2>
+                <hr class="hr-245">
+                <!-- Importamos el formulario para registrar un prveedor -->
+                @include('proveedores.create')
             </div>
         </div>
         <!-- Tabs content -->
