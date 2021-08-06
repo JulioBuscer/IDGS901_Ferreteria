@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
-
+    <script>
+        const Route_esp = "{{ URL::asset('') }}"
+    </script>
     <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Material Design Bootstrap -->
@@ -160,7 +161,9 @@
                                         </li>
 
                                         @endguest
-                                        <!--                                         
+                                        @guest
+
+                                        @else
                                         @if(!Cart::isEmpty())
                                         <li>
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
@@ -177,7 +180,8 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
-                                        @endif -->
+                                        @endif
+                                        @endguest
                                     </ul>
                                 </div>
                             </div>
@@ -190,22 +194,74 @@
         </div>
     </header>
     <!-- Navigation -->
-    <section class="border p-4 d-flex justify-content-center mb-4">
-        <div id="basic" class="form-outline" style="width: 22rem">
-            <input type="text" id="form1" class="form-control autocomplete-input focused" role="combobox"
-                aria-expanded="false" aria-owns="autocomplete-dropdown-591396" aria-haspoup="true" autocomplete="true">
-            <label class="form-label autocomplete-label active" for="form1" style="margin-left: 0px;">Example
-                label</label>
-            <div class="form-notch">
-                <div class="form-notch-leading" style="width: 9px;"></div>
-                <div class="form-notch-middle" style="width: 87.2px;"></div>
-                <div class="form-notch-trailing"></div>
-            </div>
-        </div>
-    </section>
     @yield('content')
     <!-- Main Container -->
+    <div class="modal fade" id="modalCart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Venta</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- {{Form::model(["route"=>["Categorias.update"]])}} -->
+                <div class="modal-body">
 
+                    <div class="col-12">
+                        @if (!Cart::isEmpty())
+                        <table class="table">
+                            <thead>
+                                <tr>
+
+                                    <th sc ope="col">#ID</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th sc ope="col">Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Cart::getContent() as $item)
+                                <tr>
+                                    <th scope="row">{{$item->id}}</th>
+                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->price}}</td>
+                                    <td>{{$item->quantity}}</td>
+                                    <th scope="row">
+                                        {{Form::open(["route"=>["cart.destroy",$item->id], "method"=>"POST"])}}
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"> <i class="fas fa-trash"></i>
+                                        </button>
+                                        {{Form::close()}}
+                                    </th>
+                                </tr>
+                                @endforeach
+                                
+                            </tbody>
+                        </table>
+                        
+                        @else
+                        <table class="table">
+                            <thead>
+                                <tr>
+
+                                    <th sc ope="col">No hay elementos en tu venta</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        @endif
+                    </div>
+                </div>
+                @if (!Cart::isEmpty())
+                <div class="modal-footer">
+                    <a href="{{URL::to('cart')}}" class="btn btn-primary">Terminar venta</a>
+                </div>
+                @endif
+                <!-- {{Form::close()}} -->
+            </div>
+        </div>
+    </div>
+    
     <footer class="bg-color1 page-footer text-center text-md-left white-text pt-0 mt-5 flex-end">
         <br>
         <!-- Footer Links -->

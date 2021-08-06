@@ -15,7 +15,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";
+        $clients = Db::select($toClient);
+        return view('site.cart_details', compact('clients'));
     }
 
     /**

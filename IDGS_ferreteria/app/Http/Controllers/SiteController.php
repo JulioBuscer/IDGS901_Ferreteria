@@ -11,11 +11,9 @@ use Cart;
 
 class SiteController extends Controller
 {
-
-
-    public function catalogo_productos()
-    {
-        return view('site.catalogo_productos');
+    public function sendDataCart(){
+        
+        return $clients;
     }
 
     public function home(){
@@ -26,8 +24,6 @@ class SiteController extends Controller
         LIMIT 0 , 3";
         $products = Db::select($toProducts);
         
-        $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";
-        $clients = Db::select($toClient);
-        return view('site.index', compact('products','clients'));
+        return view('site.index', compact('products'));
     }
 }

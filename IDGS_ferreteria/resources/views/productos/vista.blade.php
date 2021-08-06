@@ -334,6 +334,7 @@
         </div>
     </div>
 </div>
+
 <!-- modal para mostrar detalle -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true"
     data-mdb-backdrop="true" data-mdb-keyboard="false">
@@ -424,5 +425,4 @@
         </div>
     </div>
 </div>
-
 @endsection
