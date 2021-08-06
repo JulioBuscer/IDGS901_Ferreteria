@@ -1,4 +1,10 @@
 // FUNCIONES PARA CATEGORIAS
+// window.onload = function() {
+//     // In your Javascript (external .js resource or <script> tag)
+//     $(document).ready(function() {
+//         $('.js-example-basic-single').select2();
+//     });
+// }
 
 function editarCategorias(id, nombre, descripcion) {
 
@@ -84,4 +90,12 @@ function actualizarFotoProducto() {
         }
         fr.readAsDataURL(fileChooser.files[0]);
     }
+}
+
+function alertError(contexto) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        html: contexto
+    });
 }

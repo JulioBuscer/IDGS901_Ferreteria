@@ -8,22 +8,31 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
     <script>
-    const Route_esp = "{{URL::asset('')}}"
+        const Route_esp = "{{ URL::asset('') }}"
     </script>
 
-    <script type="text/javascript" src="{{asset('js/funcion_init.js')}}"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {{-- JQuery --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript" src="{{ asset('js/funcion_init.js') }}"></script>
 
 
-    <style>
 
-    </style>
+
 
 </head>
 
@@ -34,7 +43,7 @@
         <!-- Sidebar navigation -->
         <div class="row">
             <div class="col-4 bg-color1">
-                <img src="{{asset('img/logo.png')}}" class="nav-bar-logo">
+                <img src="{{ asset('img/logo.png') }}" class="nav-bar-logo">
                 <span class="h1 ">Ferreteria</span>
             </div>
             <!-- Navbar -->
@@ -72,39 +81,39 @@
                                             <span class="sr-only">(current)</span>
                                         </a>
                                         @else
-                                        <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{asset('#')}}"
-                                            id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <img src="data:image/jpeg;base64,{{\Auth::user()->fotografia}}"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" />
-                                            {{\Auth::user()->name}}
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu"
-                                            aria-labelledby="navbarDropdownMenuLink">
-                                            <li>
-                                                <a class="dropdown-item" href="{{asset('#')}}">Perfil</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="{{URL::to('logout')}}">Salir</a>
-                                            </li>
-                                        </ul>
+                                            <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{ asset('#') }}"
+                                                id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img src="data:image/jpeg;base64,{{ \Auth::user()->fotografia }}"
+                                                    class="rounded-circle" height="25" alt="" loading="lazy" />
+                                                {{ \Auth::user()->name }}
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu"
+                                                aria-labelledby="navbarDropdownMenuLink">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ asset('#') }}">Perfil</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ URL::to('logout') }}">Salir</a>
+                                                </li>
+                                            </ul>
 
                                         @endguest
                                         <!-- Facebook -->
-                                        <a class="fb-ic ml-0 px-4" href="{{asset('https://wwww.facebook.com')}}">
+                                        <a class="fb-ic ml-0 px-4" href="{{ asset('https://wwww.facebook.com') }}">
 
                                             <i class="fab fa-facebook-f blue-text"> </i>
 
                                         </a>
 
                                         <!-- Instagram -->
-                                        <a class="ins-ic px-4" href="{{asset('https://www.instagram.com')}}">
+                                        <a class="ins-ic px-4" href="{{ asset('https://www.instagram.com') }}">
 
                                             <i class="fab fa-instagram purple-text"> </i>
 
                                         </a>
                                         <!-- Instagram -->
-                                        <a class="ins-ic px-4" href="{{asset('https://www.whatsapp.com')}}">
+                                        <a class="ins-ic px-4" href="{{ asset('https://www.whatsapp.com') }}">
 
                                             <i class="fab fa-whatsapp green-text"> </i>
 
@@ -125,7 +134,7 @@
                     <div class="col-12">
                         <nav class="navbar bg-color2 navbar-expand-md navbar-dark" style="height: 10vh;">
                             <div class="container">
-                                <a class="navbar-brand font-weight-bold" href="{{asset('#')}}">
+                                <a class="navbar-brand font-weight-bold" href="{{ asset('#') }}">
                                 </a>
                                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                                     data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4"
@@ -136,34 +145,46 @@
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('/')}}">
+                                                href="{{ URL::to('/') }}">
                                                 Inicio
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
+                                                href="{{ URL::to('login') }}">
                                                 Catálogo
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
+
+
                                         @guest
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                Iniciar Sesión
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
+                                            <li class="nav-item">
+
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('login') }}">
+                                                    Iniciar Sesión
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
                                         @else
-                                        <li>
-                                            @if (!Cart::isEmpty())
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                                                <i class="fas fa-shopping-cart"> ({{Cart::getTotalQuantity()}})</i>
-                                                <span class="sr-only">(current)</span>
-                                            </a>
+                                            @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
+                                                <li>
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        href="{{ URL::to('proveedores') }}">
+                                                        Proveedores
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        href="{{ URL::to('compras') }}">
+                                                        Compras
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+
                                             @else
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 data-mdb-toggle="modal" data-mdb-target="#exampleModal">
@@ -171,7 +192,6 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                             @endif
-                                        </li>
                                         @endguest
                                     </ul>
                                 </div>
@@ -202,7 +222,7 @@
                     </h6>
                     <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                     <p>
-                        <img src="{{asset('img/logo.png')}}" class="footer-logo">
+                        <img src="{{ asset('img/logo.png') }}" class="footer-logo">
                 </div>
                 <!-- First column -->
                 <!-- Second column -->
@@ -262,14 +282,36 @@
     <!-- SCRIPTS -->
     <!-- JQuery -->
 
-    <script type="text/javascript" src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}">
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}">
     </script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+
+    <script type="text/javascript">
+        /* WOW.js init */
+        // new WOW().init();
+        // Tooltips Initialization
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        // Material Select Initialization
+        $(document).ready(function() {
+            $('.mdb-select').material_select();
+        });
+
+        // SideNav Initialization
+        // $(".button-collapse").sideNav();
+    </script>
+    {{-- Select 2 --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @stack('scripts')
 </body>
 
 </html>

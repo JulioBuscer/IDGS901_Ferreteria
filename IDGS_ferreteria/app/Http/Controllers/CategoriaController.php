@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriaModel;
 use Illuminate\Http\Request;
-use Session;
-use Redirect;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoriaController extends Controller
 {   
