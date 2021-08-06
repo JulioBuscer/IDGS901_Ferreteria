@@ -19,14 +19,14 @@ use Inertia\Inertia;
 Route::group(['middleware' => ['auth']], function () {
     // Agregamos los recursos de proveedores
     Route::resource('proveedores', 'ProveedoresController');
-    
+
     // Agregamos los recursos de compras
     Route::resource('compras', 'ComprasController');
     Route::resource('/Productos', 'ProductosController');
     Route::resource('/Categorias', 'CategoriaController');
     
     Route::resource('cart', 'CartController');
-    
+
     Route::resource('/Venta', 'SalesController');
 });
 
