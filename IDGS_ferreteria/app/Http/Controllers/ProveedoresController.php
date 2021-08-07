@@ -6,6 +6,7 @@ use App\Models\Proveedores;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Redirect as FacadesRedirect;
+use Psy\Readline\HoaConsole;
 
 class ProveedoresController extends Controller
 {
@@ -19,7 +20,7 @@ class ProveedoresController extends Controller
 
         $modelo = Proveedores::find(0);
         $table = Proveedores::all();
-        
+
         return view('proveedores.index ', compact('modelo', 'table'));
     }
 
@@ -102,25 +103,31 @@ class ProveedoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate([
-            'empresa' => 'required|min:5',
-            'direccion' => 'required|min:5',
-            'email' => 'required|min:5',
-            'representante' => 'required|min:5',
-            'telefono' => 'required|min:5',
-            'RFC' => 'required|min:5'
-        ]);
 
         $mProveedores = Proveedores::find($id);
-        $mProveedores->empresa = $request->empresa;
-        $mProveedores->direccion = $request->direccion;
-        $mProveedores->email = $request->email;
-        $mProveedores->representante = $request->representante;
-        $mProveedores->telefono = $request->telefono;
-        $mProveedores->RFC = $request->RFC;
-        $mProveedores->save();
+        if ($mProveedores->active == 0) {
+            $mProveedores->active = 1;
+            $request->session()->flash('message', 'Proveedor Activado');
+        } else {
+            $validateData = $request->validate([
+                'empresa' => 'required|min:5',
+                'direccion' => 'required|min:5',
+                'email' => 'required|min:5',
+                'representante' => 'required|min:5',
+                'telefono' => 'required|min:5',
+                'RFC' => 'required|min:5'
+            ]);
 
-        $request->session()->flash('message', 'Proveedor Editado');
+            $mProveedores->empresa = $request->empresa;
+            $mProveedores->direccion = $request->direccion;
+            $mProveedores->email = $request->email;
+            $mProveedores->representante = $request->representante;
+            $mProveedores->RFC = $request->RFC;
+            $mProveedores->telefono = $request->telefono;
+            $request->session()->flash('message', 'Proveedor Editado');
+        }
+
+        $mProveedores->save();
         return FacadesRedirect::to('proveedores');
     }
 
@@ -130,7 +137,7 @@ class ProveedoresController extends Controller
      * @param  \App\Models\Proveedores  $proveedores
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
         $mProveedores = Proveedores::find($id);
@@ -140,6 +147,4 @@ class ProveedoresController extends Controller
         session()->flash('message', 'Proveedor Eliminado');
         return FacadesRedirect::to('proveedores');
     }
-
-
 }

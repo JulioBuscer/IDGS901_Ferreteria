@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compras;
+use App\Models\ProductoModel;
+use App\Models\Proveedores;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
@@ -14,7 +16,12 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        //
+        $modelo = ProductoModel::find(0);
+        $proveedores = Proveedores::pluck('empresa', 'id', 'email')->prepend('selecciona un proveedor');
+        $producto = ProductoModel::pluck('nombre', 'id', 'precio');
+
+        echo var_dump($proveedores);
+        return view('compras.index ', compact('modelo', 'proveedores', 'producto'));
     }
 
     /**

@@ -1,6 +1,4 @@
 @extends('layouts.layout')
-
-
 @section('content')
 
 <!-- Carousel wrapper -->
@@ -78,35 +76,60 @@
                 </ul>
             </div>
         </div>
+        @if(Session::has('message'))
+        <br>{{Session::get('message')}} <br>
+        @endif
+
+        {{HTML::ul($errors->all())}}
         <div class="row row-cols-1 row-cols-md-3 g-4">
+
             @forelse($products as $row)
+            {{Form::open(["url"=>"cart"])}}
             <div class="col">
                 <div class="card border border-dark shadow-0 h-100 ml-3">
                     <img src="data:image/jpeg;base64,{{$row->fotografia}}" style="height:250px;" class="card-img-top"
                         alt="..." />
+                    <input style="display:none;" name="id" value="{{$row->id}}">
+                    <input style="display:none;" name="price" value="{{$row->precio}}">
+                    <input style="display:none;" name="name" value="{{$row->nombre}}">
                     <div class="card-body">
-                        <h4 class="card-title "><strong>{{$row->nombre}}</strong></h4>
+                       
+
+                        <h4 class="card-title "><strong name="name">{{$row->nombre}}</strong></h4>
                         <p class="card-text">
                             {{$row->descripcion}}
                         </p>
+                        <p>Existencias: <strong name="name">{{$row->cantidad}}</strong></p>
+                        @guest
+                        @else
+                        <div class="col-4 form-outline">
+                            <input type="number" min="1" max="{{$row->cantidad}}" name="quantity" value="1"
+                                class="form-control" />
+                            <label class="form-label" for="quantity">Cantidad</label>
+                        </div>
+                        @endguest
                     </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-6">
                                 <p class="note note-primary">
-                                    <strong>${{$row->precio}}</strong>
+                                    <strong name="price">${{$row->precio}}</strong>
                                 </p>
                             </div>
+                            @guest
+                            
+                            @else
                             <div class="col-6">
                                 <div class="text-right">
-                                    <a href="#!" class="btn btn-primary">Agregar</a></small>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
                                 </div>
                             </div>
+                            @endguest
                         </div>
                     </div>
                 </div>
             </div>
-
+            {{Form::close()}}
             @empty
             <h1>No hay productos</h1>
             @endforelse
