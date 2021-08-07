@@ -15,9 +15,20 @@ class CartController extends Controller
      */
     public function index()
     {
-        $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";
-        $clients = Db::select($toClient);
-        return view('site.cart_details', compact('clients'));
+        // $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";
+        // $clients = Db::select($toClient);
+
+        $clients = DB::table('persona')
+        ->join('cliente','cliente.idPersona','=','persona.id')
+        ->select('cliente.id', DB::raw("concat(persona.nombre, ' ', persona.apellidoP, ' ', persona.apellidoM) as nombre")
+        ,'cliente.direccion', 'cliente.rfc')->get();
+        
+        
+
+        // echo var_dump($clients);
+        $clientes = $clients->pluck('nombre', 'id')->prepend('Seleccionar cliente...');
+        echo var_dump($clientes);
+        return view('site.cart_details', compact('clientes'));
     }
 
     /**

@@ -20,6 +20,7 @@ class ComprasController extends Controller
         $proveedores = Proveedores::pluck('empresa', 'id', 'email')->prepend('selecciona un proveedor');
         $producto = ProductoModel::pluck('nombre', 'id', 'precio');
 
+        echo var_dump($proveedores);
         return view('compras.index ', compact('modelo', 'proveedores', 'producto'));
     }
 

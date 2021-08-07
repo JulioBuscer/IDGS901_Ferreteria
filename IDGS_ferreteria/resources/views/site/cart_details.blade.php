@@ -62,16 +62,16 @@
                         </tbody>
                     </table>
                     <div class="col form-outline  m-2">
-                        <input list="brow" class="form-control" type="text" name="client">
-                        <datalist id="brow">
-                            @forelse($clients as $slc)
-                            <option value="{{$slc->id}}">{{$slc->nombre}}</option>
-                            @empty
-                            <option value="0">No hay Registros</option>
-                            @endforelse
-                        </datalist>
-                        <label class="form-label" for="form1">Cliente</label>
-                    </div>
+                    {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
+                    {!! Form::label('selectCliente', 'Clientes', ['class' => 'form-control']) !!}
+                    {!! Form::select('selectCliente', $clientes, null, ['class' => 'form-control', 'id' => 'selectCliente', 'onchange' => '', 'required']) !!}
+                    {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
+                    @push('scripts')
+                        <script>
+                            $('#selectCliente').select2({});
+                        </script>
+                    @endpush
+                </div>
                     <p class="card-text">
                     </p>
                 </div>
