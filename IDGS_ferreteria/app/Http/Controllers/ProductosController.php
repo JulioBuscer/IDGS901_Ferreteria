@@ -20,16 +20,15 @@ class ProductosController extends Controller
      */
     public function index()
     {   
-        $sql = 'SELECT * FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 1';
+        $sql = 'SELECT * FROM producto WHERE active = 1';
         $table = Db::select($sql);
-        $sql2 = 'SELECT * FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 0';
+        $sql2 = 'SELECT * FROM producto WHERE active = 0';
         $table2 = Db::select($sql2);
         $select = CategoriaModel::all();
-        $prov = Proveedor::all();
 
         
 
-        return view('productos.vista', compact('table', 'table2','select','prov'));
+        return view('productos.vista', compact('table', 'table2','select'));
     }
 
     /**
@@ -71,12 +70,6 @@ class ProductosController extends Controller
         $registroProductos->active = "1";
         $registroProductos->idCategoria = $request->slcCategoria;
         $registroProductos->save();
-
-        $provProd = new proveedor_prodcuto();
-        $provProd->idProveedor= $request->slcProvProd;
-        $provProd->idProducto= $registroProductos->id;
-        $provProd->precioCompra= $request->precioCompra;
-        $provProd->save();
 
         DB::commit();
 
@@ -141,17 +134,12 @@ class ProductosController extends Controller
         $actualCat->fotografia = $request->textarea0;
         $actualCat->active = "1";
         $actualCat->idCategoria = $request->slcCategoria10;
+        $actualCat->save();
 
-        $provProd = proveedor_prodcuto::find($id);
-        $provProd->idProveedor= $request->slcProvProd0;
-        $provProd->idProducto= $actualCat->id;
-        $provProd->precioCompra= $request->precioCompra0;
-        $provProd->save();
 
         DB::commit();
 
 
-        $actualCat->save();
         Session::flash('message','Producto editado!');
         return redirect::to('Productos');
         //

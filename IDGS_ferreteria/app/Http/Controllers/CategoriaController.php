@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriaModel;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Illuminate\Support\Facades\Redirect;
+use Session;
+use Redirect;
 
 class CategoriaController extends Controller
-{   
+{
 
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class CategoriaController extends Controller
     public function index()
     {
         $table = CategoriaModel::all();
-        
+
         return view('categorias.vista', compact('table'));
     }
 
@@ -47,15 +47,13 @@ class CategoriaController extends Controller
             'descripcionCategoria' => 'required|min:3|max:50'
         ]);
 
-        $registroCategorias =new CategoriaModel();
+        $registroCategorias = new CategoriaModel();
         $registroCategorias->nombre = $request->nombreCategoria;
         $registroCategorias->descripcion = $request->descripcionCategoria;
 
         $registroCategorias->save();
-        Session::flash('message','usuario creado!');
+        Session::flash('message', 'usuario creado!');
         return redirect::to('Categorias');
-
-        
     }
 
     /**
@@ -90,11 +88,11 @@ class CategoriaController extends Controller
      * @param  \App\Models\CategoriaModel  $categoriaModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
 
         $validateData = $request->validate([
-            'idCat'=> 'required',
+            'idCat' => 'required',
             'nombreCat' => 'required|min:3|max:30',
             'descripcionCat' => 'required|min:3|max:50'
         ]);
@@ -104,9 +102,8 @@ class CategoriaController extends Controller
         $actualCat->descripcion = $request->descripcionCat;
 
         $actualCat->save();
-        Session::flash('message','usuario creado!');
+        Session::flash('message', 'usuario creado!');
         return redirect::to('Categorias');
-
     }
 
     /**
@@ -121,7 +118,7 @@ class CategoriaController extends Controller
         $borrarCategoria->delete();
 
 
-        Session::flash('message','usuario eliminado!');
+        Session::flash('message', 'usuario eliminado!');
         return redirect::to('Categorias');
     }
 }
