@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductoModel;
 use App\Models\Proveedores;
+use App\Models\ProveedoresProductos;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Redirect as FacadesRedirect;
 use Psy\Readline\HoaConsole;
+
+use function PHPUnit\Framework\countOf;
 
 class ProveedoresController extends Controller
 {
@@ -21,7 +25,10 @@ class ProveedoresController extends Controller
         $modelo = Proveedores::find(0);
         $table = Proveedores::all();
 
-        return view('proveedores.index ', compact('modelo', 'table'));
+        $proveedores = Proveedores::pluck('empresa', 'id')->prepend('selecciona un proveedor');
+        $productos = ProductoModel::pluck('nombre', 'id')->prepend('selecciona un proveedor');
+
+        return view('proveedores.index ', compact('modelo', 'table', 'productos', 'proveedores'));
     }
 
     /**
@@ -43,27 +50,49 @@ class ProveedoresController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'empresa' => 'required|min:5',
-            'direccion' => 'required|min:5',
-            'email' => 'required|min:5',
-            'representante' => 'required|min:5',
-            'telefono' => 'required|min:5',
-            'rfc' => 'required|min:5',
-        ]);
-
-        $mProveedores = new Proveedores();
-        $mProveedores->empresa = $request->empresa;
-        $mProveedores->direccion = $request->direccion;
-        $mProveedores->email = $request->email;
-        $mProveedores->representante = $request->representante;
-        $mProveedores->telefono = $request->telefono;
-        $mProveedores->RFC = $request->rfc;
-        $mProveedores->active = 1;
-        $mProveedores->save();
 
 
-        $request->session()->flash('message', 'Proveedor Agregado');
+        if ($request->selectProveedor != null) {
+            $validateData = $request->validate([
+                'selectProveedor' => 'required',
+                'selectProducto' => 'required',
+                'costo' => 'required'
+            ]);
+            $mProovedoreProducto = new ProveedoresProductos();
+            $mProovedoreProducto->idProducto = $request->selectProducto;
+            $mProovedoreProducto->idProveedor = $request->selectProveedor;
+            $mProovedoreProducto->precioCompra = $request->costo;
+
+            $request->session()->flash('message', 'Producto Agregado a Proveedor');
+
+            $mProovedoreProducto->save();
+        } else {
+            echo $request->empresa;
+
+            $validateData = $request->validate([
+                'empresa' => 'required|min:5',
+                'direccion' => 'required|min:5',
+                'email' => 'required|min:5',
+                'representante' => 'required|min:5',
+                'telefono' => 'required|min:5',
+                'rfc' => 'required|min:5',
+            ]);
+
+            $mProveedores = new Proveedores();
+            $mProveedores->empresa = $request->empresa;
+            $mProveedores->direccion = $request->direccion;
+            $mProveedores->email = $request->email;
+            $mProveedores->representante = $request->representante;
+            $mProveedores->telefono = $request->telefono;
+            $mProveedores->RFC = $request->rfc;
+            $mProveedores->active = 1;
+
+            $request->session()->flash('message', 'Proveedor Agregado');
+
+            $mProveedores->save();
+        }
+
+
         return FacadesRedirect::to('proveedores');
     }
 
@@ -103,7 +132,6 @@ class ProveedoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $mProveedores = Proveedores::find($id);
         if ($mProveedores->active == 0) {
             $mProveedores->active = 1;
@@ -127,8 +155,8 @@ class ProveedoresController extends Controller
             $request->session()->flash('message', 'Proveedor Editado');
         }
 
-        $mProveedores->save();
-        return FacadesRedirect::to('proveedores');
+        // $mProveedores->save();
+        // return FacadesRedirect::to('proveedores');
     }
 
     /**

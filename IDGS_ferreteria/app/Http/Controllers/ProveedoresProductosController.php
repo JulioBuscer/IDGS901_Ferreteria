@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Compras;
-use App\Models\ProductoModel;
-use App\Models\Proveedores;
+use App\Models\ProveedoresProductos;
 use Illuminate\Http\Request;
 
-class ComprasController extends Controller
+class ProveedoresProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        $modelo = ProductoModel::find(0);
-        $proveedores = Proveedores::pluck('empresa', 'id', 'email')->prepend('Selecciona un proveedor');
-        $producto = ProductoModel::pluck('nombre', 'id', 'precio')->prepend('Selecciona un producto');
-        return view('compras.index ', compact('modelo', 'proveedores', 'producto'));
+        //
     }
 
     /**
@@ -46,10 +41,10 @@ class ComprasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Compras  $compras
+     * @param  \App\Models\ProveedoresProductos  $proveedoresProductos
      * @return \Illuminate\Http\Response
      */
-    public function show(Compras $compras)
+    public function show(ProveedoresProductos $proveedoresProductos)
     {
         //
     }
@@ -57,10 +52,10 @@ class ComprasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Compras  $compras
+     * @param  \App\Models\ProveedoresProductos  $proveedoresProductos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Compras $compras)
+    public function edit(ProveedoresProductos $proveedoresProductos)
     {
         //
     }
@@ -69,10 +64,10 @@ class ComprasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Compras  $compras
+     * @param  \App\Models\ProveedoresProductos  $proveedoresProductos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compras $compras)
+    public function update(Request $request, ProveedoresProductos $proveedoresProductos)
     {
         //
     }
@@ -80,10 +75,10 @@ class ComprasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Compras  $compras
+     * @param  \App\Models\ProveedoresProductos  $proveedoresProductos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Compras $compras)
+    public function destroy(ProveedoresProductos $proveedoresProductos)
     {
         //
     }
