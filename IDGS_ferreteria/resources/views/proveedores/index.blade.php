@@ -47,14 +47,13 @@
             </li>
         </ul>
         <!-- Tabs navs -->
-
         <!-- Tabs content -->
         <div class="tab-content d-flex align-items-center justify-content-center mb-3" id="ex2-content">
             <!-- Activos -->
             <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
                 <h2 class="card-title text-left">Proveedores Activos</h2>
                 <hr class="hr-245">
-                <table class="table text-justify responsive">
+                <table class="table responsive">
                     <thead class="table-dark text-center">
                         <th>PROVEEDOR</th>
                         <th>REPRESENTANTE</th>
@@ -79,7 +78,7 @@
                                         <!-- Consultar -->
                                         <span class="col">
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                                            <button type="button" class="btn btn-primary btn-sm" data-mdb-toggle="modal"
                                                 data-mdb-target="#showModal{{ $loop->index }}">
                                                 <i class="fas fa-eye"></i>
                                             </button>
@@ -98,7 +97,7 @@
                                                             @include('proveedores.show',$modelo=$row)
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
+                                                            <button type="button" class="btn btn-secondary "
                                                                 data-mdb-dismiss="modal">
                                                                 <i class="fas fa-eye-slash"></i>
                                                             </button>
@@ -110,7 +109,7 @@
                                         <!-- Editar -->
                                         <span class="col">
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-success" data-mdb-toggle="modal"
+                                            <button type="button" class="btn btn-success btn-sm" data-mdb-toggle="modal"
                                                 data-mdb-target="#editModal{{ $loop->index }}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -151,7 +150,7 @@
                                         <span class="col">
                                             {{ Form::open(['url' => route('proveedores.destroy', $row->id)]) }}
                                             {{ Form::hidden('_method', 'DELETE') }}
-                                            <button type="submit" class="btn btn-danger" /> <i class='fas fa-trash'></i>
+                                            <button type="submit" class="btn btn-danger btn-sm" /> <i class='fas fa-trash'></i>
                                             </button>
                                             {{ Form::close() }}
                                         </span>

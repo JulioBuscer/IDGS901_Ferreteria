@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductoModel;
+use App\Models\proveedor_prodcuto;
 use App\Models\Proveedores;
 use App\Models\ProveedoresProductos;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect as FacadesRedirect;
 use Psy\Readline\HoaConsole;
 
 use function PHPUnit\Framework\countOf;
+use function Psy\debug;
 
 class ProveedoresController extends Controller
 {
@@ -22,13 +24,12 @@ class ProveedoresController extends Controller
     public function index()
     {
 
+        $sql = 'SELECT pp.id, pp.idProducto, pp.idProveedor, p.nombre, pp.precioCompra FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 1';
+        $proveedores_prodcutos = Db::select($sql);
         $modelo = Proveedores::find(0);
-        $table = Proveedores::all();
-
-        $proveedores = Proveedores::pluck('empresa', 'id')->prepend('selecciona un proveedor');
-        $productos = ProductoModel::pluck('nombre', 'id')->prepend('selecciona un proveedor');
-
-        return view('proveedores.index ', compact('modelo', 'table', 'productos', 'proveedores'));
+        $table = Proveedores::orderBy('empresa','ASC')->get();
+        $productos = ProductoModel::orderBy('nombre','ASC')->get();
+        return view('proveedores.index ', compact('modelo', 'table', 'productos',  'proveedores_prodcutos'));
     }
 
     /**
@@ -162,17 +163,24 @@ class ProveedoresController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Proveedores  $proveedores
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
     {
+        if ($request->idProducto) {
+            $mProveedor_Producto = ProveedoresProductos::find($request->id);
+            $mProveedor_Producto->delete();
+            session()->flash('message', 'Producto Eliminado de Proveedor');
+        } else {
+            $mProveedores = Proveedores::find($id);
+            $mProveedores->active = 0;
+            $mProveedores->save();
 
-        $mProveedores = Proveedores::find($id);
-        $mProveedores->active = 0;
-        $mProveedores->save();
+            session()->flash('message', 'Proveedor Eliminado');
+        }
 
-        session()->flash('message', 'Proveedor Eliminado');
         return FacadesRedirect::to('proveedores');
     }
 }

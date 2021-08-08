@@ -36,13 +36,54 @@
                 <h2 class="card-title text-left">Proveedores Activos</h2>
                 <hr class="hr-245">
                 <div class="col form-outline  m-2">
-                    {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
-                    {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}
-                    {!! Form::select('selectProveedor', $proveedores, null, ['class' => 'form-control', 'id' => 'selectProveedor', 'onchange' => '', 'required']) !!}
+                    <form id="formProveedores" name="formProveedores" method="HEAD"
+                        action=" {{ route('compras.create') }} ">
+                        {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
+                        {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}
+                        <select name="selectProveedor" id="selectProveedor" required style="width: 50vh">
+                            @forelse ($proveedores as $proveedor)
+                                <option value="{{ $proveedor->id }}">{{ $proveedor->empresa }}</option>
+                            @empty
+
+                            @endforelse
+                        </select>
+                        <button type="succes" name="consultarProductos" id="consultarProductos">consultarProductos</button>
+                    </form>
+                    {!! Form::label('selectProducto', 'Productos', ['class' => 'form-control']) !!}
+                    <select name="selectProducto" id="selectProducto" required style="width: 50vh" disabled>
+
+
+                    </select>
                     {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
                     @push('scripts')
                         <script>
+                            var productos;
                             $('#selectProveedor').select2({});
+                            $('#selectProducto').select2({});
+                            $('#consultarProductos').click(function(e) {
+                                e.preventDefault();
+                                // debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '{{ route('compras.create') }}',
+                                    data: $('#selectProveedor').val(),
+                                    success: function(proveedorProductos) {
+                                        console.log(proveedorProductos);
+                                        productos = proveedorProductos;
+                                        var inner = "";
+                                        if (productos.length > 0) {
+                                            productos.forEach(element => {
+                                                inner += "<option value='" + element.id + "'>" +
+                                                    element.empresa + "</option>";
+                                            });
+                                            $('#selectProducto').html(inner);
+                                            $('#selectProducto').removeAttr("disabled");
+                                        }
+                                        debugger;
+
+                                    }
+                                });
+                            });
                         </script>
                     @endpush
                 </div>

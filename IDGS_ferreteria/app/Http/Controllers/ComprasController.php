@@ -17,9 +17,8 @@ class ComprasController extends Controller
     public function index()
     {
         $modelo = ProductoModel::find(0);
-        $proveedores = Proveedores::pluck('empresa', 'id', 'email')->prepend('Selecciona un proveedor');
-        $producto = ProductoModel::pluck('nombre', 'id', 'precio')->prepend('Selecciona un producto');
-        return view('compras.index ', compact('modelo', 'proveedores', 'producto'));
+        $proveedores = Proveedores::orderBy('empresa', 'ASC')->get();
+        return view('compras.index ', compact('modelo', 'proveedores'));
     }
 
     /**
@@ -29,7 +28,10 @@ class ComprasController extends Controller
      */
     public function create()
     {
-        //
+        // $sql = 'SELECT pp.id, pp.idProducto, pp.idProveedor, p.nombre, pp.precioCompra FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 1';
+
+        $proveedorProductos = Proveedores::orderBy('empresa', 'ASC')->get();
+        return ($proveedorProductos);
     }
 
     /**
