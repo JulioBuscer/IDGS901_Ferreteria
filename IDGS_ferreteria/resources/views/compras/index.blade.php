@@ -36,63 +36,16 @@
                 <h2 class="card-title text-left">Proveedores Activos</h2>
                 <hr class="hr-245">
                 <div class="col form-outline  m-2">
-                    <form id="formProveedores" name="formProveedores" method="HEAD"
-                        action=" {{ route('compras.create') }} ">
-                        {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
-                        {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}
-                        <select name="selectProveedor" id="selectProveedor" required style="width: 50vh">
-                            @forelse ($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}">{{ $proveedor->empresa }}</option>
-                            @empty
 
-                            @endforelse
-                        </select>
-                        <button type="succes" name="consultarProductos" id="consultarProductos">consultarProductos</button>
-                    </form>
-                    {!! Form::label('selectProducto', 'Productos', ['class' => 'form-control']) !!}
-                    <select name="selectProducto" id="selectProducto" required style="width: 50vh" disabled>
-
-
-                    </select>
-                    {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
-                    @push('scripts')
-                        <script>
-                            var productos;
-                            $('#selectProveedor').select2({});
-                            $('#selectProducto').select2({});
-                            $('#consultarProductos').click(function(e) {
-                                e.preventDefault();
-                                // debugger;
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '{{ route('compras.create') }}',
-                                    data: $('#selectProveedor').val(),
-                                    success: function(proveedorProductos) {
-                                        console.log(proveedorProductos);
-                                        productos = proveedorProductos;
-                                        var inner = "";
-                                        if (productos.length > 0) {
-                                            productos.forEach(element => {
-                                                inner += "<option value='" + element.id + "'>" +
-                                                    element.empresa + "</option>";
-                                            });
-                                            $('#selectProducto').html(inner);
-                                            $('#selectProducto').removeAttr("disabled");
-                                        }
-                                        debugger;
-
-                                    }
-                                });
-                            });
-                        </script>
-                    @endpush
                 </div>
             </div>
             <!-- Inactivos -->
             <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
                 <h2 class="card-title text-left">Proveedores Inactivos</h2>
                 <hr class="hr-245">
+                <div class="col form-outline  m-2">
 
+                </div>
             </div>
             <!-- Registro -->
 
@@ -101,8 +54,10 @@
                 <div class="card-body">
                     <h2 class="card-title text-left">Proveedores Registro</h2>
                     <hr class="hr-245">
-                    <!-- Importamos el formulario para registrar un prveedor -->
-                    <!-- @include('proveedores.create') -->
+                    <div class="col form-outline  m-2">
+
+                        @include('compras.create')
+                    </div>
                 </div>
             </div>
         </div>

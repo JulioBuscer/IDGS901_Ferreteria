@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Compras;
 use App\Models\ProductoModel;
 use App\Models\Proveedores;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
@@ -16,8 +17,12 @@ class ComprasController extends Controller
      */
     public function index()
     {
+        $sql = 'SELECT p.id , p.empresa FROM proveedor as p 
+INNER JOIN proveedor_producto as pp ON p.id= pp.idProveedor
+WHERE active=1 group by p.id';
+        $proveedores = Db::select($sql);
         $modelo = ProductoModel::find(0);
-        $proveedores = Proveedores::orderBy('empresa', 'ASC')->get();
+        // $proveedores = Proveedores::orderBy('empresa', 'ASC')->get();
         return view('compras.index ', compact('modelo', 'proveedores'));
     }
 
@@ -26,12 +31,19 @@ class ComprasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        // $sql = 'SELECT pp.id, pp.idProducto, pp.idProveedor, p.nombre, pp.precioCompra FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 1';
+        if ($request->option == 1) {
 
-        $proveedorProductos = Proveedores::orderBy('empresa', 'ASC')->get();
-        return ($proveedorProductos);
+            $id = $request->selectProveedor;
+            $sql = 'SELECT pp.idProducto as id, p.nombre , pp.precioCompra 
+        FROM proveedor_producto AS pp 
+        INNER JOIN producto AS p ON (pp.idProducto=p.id) 
+        WHERE active = 1 and pp.idProveedor =' . $id;
+            $proveedorProductos = Db::select($sql);
+            // $proveedorProductos = Proveedores::orderBy('empresa', 'ASC')->get();
+            return ($proveedorProductos);
+        }
     }
 
     /**
