@@ -19,9 +19,9 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $sql = 'SELECT u.id,u.email,u.fotografia,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 1;';
+        $sql = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 1;';
         $table = Db::select($sql);
-        $sql2 = 'SELECT u.id,u.email,u.fotografia,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 0;';
+        $sql2 = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 0;';
         $table2 = Db::select($sql2);
         $select = Rol::all();
 
@@ -70,7 +70,10 @@ class EmpleadoController extends Controller
         $registroEmpleado =new Empleado();
         $registroEmpleado->name = $request->nombre;
         $registroEmpleado->email = $request->email;
-        $registroEmpleado->password = bcrypt($request->password);
+        if($request->password){
+            $registroEmpleado->password = bcrypt($request->password);
+
+        }
         $registroEmpleado->active = "1";
         $registroEmpleado->token = "1";
         $registroEmpleado->fotografia = $request->textarea;
@@ -102,9 +105,14 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleado $empleado)
+    public function edit($id)
     {
-        //
+        $del = Empleado::find($id);
+        $del->active = 1;
+
+        $del->save();
+        Session::flash('message','estatus activo!');
+        return redirect::to('Empleados');
     }
 
     /**
@@ -114,9 +122,41 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleado $empleado)
+    public function update(Request $request, $id)
     {
-        //
+        $validateData = $request->validate([
+            'nombre1' => 'required|min:3|max:30',
+            'App1' => 'required|min:3|max:80',
+            'Apm1' => 'required',
+            'tel1' => 'required',
+            'email1' => 'required',
+            'slcRol1' => 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        $registroPersona = Persona::find($request->idPer);
+        $registroPersona->nombre = $request->nombre1;
+        $registroPersona->apellidoP = $request->App1;
+        $registroPersona->apellidoM = $request->Apm1;
+        $registroPersona->telefono = $request->tel1;
+        $registroPersona->save();
+
+        $registroEmpleado =Empleado::find($id);
+        $registroEmpleado->name = $request->nombre1;
+        $registroEmpleado->email = $request->email1;
+        $registroEmpleado->active = "1";
+        $registroEmpleado->token = "1";
+        $registroEmpleado->fotografia = $request->textarea0;
+        $registroEmpleado->id_rol = $request->slcRol1;
+        $registroEmpleado->id_persona = $request->idPer;
+        $registroEmpleado->save();
+
+
+        DB::commit();
+
+        Session::flash('message','Producto creado!');
+        return redirect::to('Empleados');
     }
 
     /**
@@ -125,8 +165,13 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
-        //
+        $del = Empleado::find($id);
+        $del->active = 0;
+
+        $del->save();
+        Session::flash('message','estatus activo!');
+        return redirect::to('Empleados');
     }
 }

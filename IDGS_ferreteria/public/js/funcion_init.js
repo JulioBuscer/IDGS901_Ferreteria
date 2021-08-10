@@ -121,30 +121,35 @@ function verRoles(id, nombre, descripcion) {
 
 //FUNCIONES PARA EMPLEADOS
 
-function editarEmpleado(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria) {
-    $('#idProd').val(id);
-    $('#nombreProducto0').val(nombre);
-    $('#txtDescripcion0').val(descripcion);
-    $('#txtPrecio0').val(precio);
-    $('#txtCantidad0').val(cantidad);
-    $('#txtUnidad0').val(unidad);
+function editarEmpleado(id, nombre, app, apm, email, tel, foto, idPersona, idRol, pass) {
+    $('#idEmp').val(id);
+    $('#idPer').val(idPersona);
+    $('#nombre1').val(nombre);
+    $('#App1').val(app);
+    $('#Apm1').val(apm);
+    $('#tel1').val(tel);
+    $('#email1').val(email);
+    $('#password1').val("");
     $('#imgFoto20').attr("src", "data:image/jpeg;base64," + foto).width(220).height(280);
     $('#textarea0').val(foto);
-    $('#slcCategoria10').val(idCategoria);
+    $('#slcRol1').val(idRol);
 
-    var ruta = Route_esp + "Productos/" + id
+    var ruta = Route_esp + "Empleados/" + id
 
     $('#editCat').attr('action', ruta);
 }
 
-function verEmpleado(id, nombre, descripcion, precio, cantidad, unidad, foto, idCategoria) {
-    $('#nombreProducto1').val(nombre);
-    $('#txtDescripcion1').val(descripcion);
-    $('#txtPrecio1').val(precio);
-    $('#txtCantidad1').val(cantidad);
-    $('#txtUnidad1').val(unidad);
+function verEmpleado(id, nombre, app, apm, email, tel, foto, idPersona, idRol, pass) {
+
+    $('#nombre2').val(nombre);
+    $('#App2').val(app);
+    $('#Apm2').val(apm);
+    $('#tel2').val(tel);
+    $('#email2').val(email);
+    $('#password2').val(pass);
     $('#imgFoto21').attr("src", "data:image/jpeg;base64," + foto).width(220).height(280);
-    $('#slcCategoria11').val(idCategoria);
+    $('#textarea01').val(foto);
+    $('#slcRol2').val(idRol);
 
 
 }
