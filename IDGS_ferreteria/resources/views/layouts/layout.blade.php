@@ -84,9 +84,16 @@
                                         <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{ asset('#') }}"
                                             id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="data:image/jpeg;base64,{{ \Auth::user()->fotografia }}"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" />
+                                            @if(\Auth::user()->fotografia)
+                                            <img src="data:image/jpeg;base64,{{ \Auth::user()->fotografia }}" class="rounded-circle"
+                                                height="25" alt="" loading="lazy" />
+
+                                            @else
+                                            <img src="{{ \Auth::user()->profile_photo_url }}" class="rounded-circle"
+                                                height="25" alt="" loading="lazy" />
+                                            @endif
                                             {{ \Auth::user()->name }}
+
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu"
                                             aria-labelledby="navbarDropdownMenuLink">
@@ -151,7 +158,7 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
-
+                                        @guest
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                 href="{{URL::to('Catalogo')}}">
@@ -159,8 +166,18 @@
                                                 <span class="sr-only">(current)</span>
                                             </a>
                                         </li>
+                                        @else
+                                        @if(\Auth::user()->id_rol ==2)
+                                        <li class="nav-item">
+                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                href="{{URL::to('Catalogo')}}">
+                                                Catálogo
+                                                <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                        @endif
 
-
+                                        @endguest
                                         @guest
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
@@ -170,7 +187,7 @@
                                             </a>
                                         </li>
                                         @else
-                                       
+
                                         @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
@@ -188,6 +205,7 @@
                                         </li>
 
                                         @endif
+                                        @if(\Auth::user()->id_rol == 2)
                                         @if(!Cart::isEmpty())
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
@@ -206,6 +224,8 @@
                                             </a>
                                         </li>
                                         @endif
+                                        @endif
+
                                         @endguest
                                     </ul>
                                 </div>

@@ -51,8 +51,8 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'nombreProducto' => 'required|min:3|max:30',
-            'txtDescripcion' => 'required|min:3|max:80',
+            'nombreProducto' => 'required|min:3|max:80',
+            'txtDescripcion' => 'required|min:3|max:250',
             'slcCategoria' => 'required',
             'txtPrecio' => 'required',
             'txtCantidad' => 'required',
