@@ -17,13 +17,14 @@ class ComprasController extends Controller
      */
     public function index()
     {
+        $carrito = [];
         $sql = 'SELECT p.id , p.empresa FROM proveedor as p 
 INNER JOIN proveedor_producto as pp ON p.id= pp.idProveedor
 WHERE active=1 group by p.id';
         $proveedores = Db::select($sql);
         $modelo = ProductoModel::find(0);
         // $proveedores = Proveedores::orderBy('empresa', 'ASC')->get();
-        return view('compras.index ', compact('modelo', 'proveedores'));
+        return view('compras.index ', compact('modelo', 'proveedores', 'carrito'));
     }
 
     /**
