@@ -28,7 +28,7 @@
 
     <div class="col form-outline m-2">
         {!! Form::number('costo', Request::old('costo'), ['class' => 'form-control', 'required']) !!}
-        {!! Form::label('csoto', 'Costo', ['class' => 'form-label']) !!}
+        {!! Form::label('costo', 'Costo', ['class' => 'form-label']) !!}
     </div>
 </div>
 

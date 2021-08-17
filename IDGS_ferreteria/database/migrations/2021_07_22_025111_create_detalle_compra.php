@@ -16,7 +16,9 @@ class CreateDetalleCompra extends Migration
         Schema::create('detalle_compra', function (Blueprint $table) {
             $table->id();
             $table->string('cantidad');
+            $table->string('precioCompra');
             $table->foreignId('idProducto')->nullable()->constrained()->references('id')->on('producto');
+            $table->foreignId('idDetalleCompra')->nullable()->constrained()->references('id')->on('detalle_compra');
             $table->timestamps();
         });
     }

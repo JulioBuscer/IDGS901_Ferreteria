@@ -1,72 +1,102 @@
 <form id="formProveedores" name="formProveedores" method="HEAD" action=" {{ route('compras.create') }} ">
+    <div class="container row">
+        <div class="col-10">
+            <div class="">
+                {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-label']) !!}
+                <select name="selectProveedor" id="selectProveedor" required style="width: 50vh" class="form-select">
+                    <option value="">Seleccione un proveedor</option>
+                    @forelse ($proveedores as $proveedor)
+                        <option value="{{ $proveedor->id }}">{{ $proveedor->empresa }}</option>
+                    @empty
 
-    {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-label']) !!}
-    <select name="selectProveedor" id="selectProveedor" required style="width: 50vh" class="form-select">
-        @forelse ($proveedores as $proveedor)
-            <option value="{{ $proveedor->id }}">{{ $proveedor->empresa }}</option>
-        @empty
+                    @endforelse
+                </select>
 
-        @endforelse
-    </select>
-    {!! Form::label('selectProducto', 'Productos', ['class' => 'form-label ']) !!}
-    <select name="selectProducto" id="selectProducto" required style="width: 50vh" disabled class="form-select">
-    </select>
-    {!! Form::label('precio', 'Precio Compra', ['class' => 'form-label']) !!}
-    <input type="number" readonly name="precio" id="precio" class="form-input">
+                {!! Form::label('selectProducto', 'Productos', ['class' => 'form-label ']) !!}
+                <select name="selectProducto" id="selectProducto" required style="width: 50vh" disabled
+                    class="form-select">
+                </select>
+            </div>
 
-    <input type="number" value="0" name="option" id="option" readonly hidden>
+            <div class="">
+                {!! Form::label('precio', 'Precio Compra', ['class' => 'form-label']) !!}
+                {!! Form::number('precio', null, ['class' => 'form-input', 'readonly']) !!}
 
-    <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
-            class="fas fa-box-open"></i></button>
+                {!! Form::label('cantidad', 'Cantidad', ['class' => 'form-label']) !!}
+                {!! Form::number('cantidad', null, ['class' => 'form-input', 'placeholder' => '0']) !!}
+
+                <input type="number" value="0" name="option" id="option" readonly hidden>
+
+                <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
+                        class="fas fa-box-open"></i></button>
+
+            </div>
+
+        </div>
+        <div class="col-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total</h5>
+                    <h3 id="total" name=total class="card-text text-success"></h3>
+                    <button id="agregarCompra" name="agregarCompra" hidden class="btn btn-color-2" /><i
+                        class="fas fa-save"></i> </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container row">
+        <table id="tablaCarrito" name="tablaCarrito" class="table text-center">
+            <thead>
+                <tr>
+                    <th>❌</th>
+                    <th>Producto</th>
+                    <th>Costo</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody name="tblProductos" id="tblProductos">
+
+            </tbody>
+        </table>
+    </div>
 </form>
-
-<div class="">
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    @if (count($carrito) > 0)
-                        @forelse ($carrito as $item)
-
-                            <option value="{{ $item }}">
-                                {{ $item }}
-                            </option>
-                        @empty
-
-                        @endforelse
-                    @endif
-
-                </th>
-            </tr>
-        </thead>
-        <tbody name="productoID" id="productoID">
-        </tbody>
-    </table>
-</div>
 {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
 @push('scripts')
     <script>
         var productos;
-        var array
+        var array;
+        var carrito;
+        var idProducto;
+        var producto;
+        var precio;
+        var cantidad;
+        var total;
         $('#selectProveedor').select2({});
         $('#selectProducto').select2({});
+
+
         $('#selectProveedor').change(function(e) {
             e.preventDefault();
             $('#option').val(1);
+            limpiarDatos();
+            cargarCarrito();
             $.ajax({
                 type: 'GET',
                 url: '{{ route('compras.create') }}',
                 data: $('#formProveedores').serialize(),
                 success: function(proveedorProductos) {
-                    console.log(proveedorProductos);
+                    // console.log(proveedorProductos);
                     $('#precio').val(proveedorProductos[0]["precioCompra"]);
                     productos = proveedorProductos;
                     var inner = "";
                     if (productos.length > 0) {
-                        productos[0].id
+                        // productos[0].id
                         productos.forEach(element => {
                             inner += "<option value='" + element.id + "'>" +
                                 element.nombre + "</option>";
+
                         });
                         $('#selectProducto').html(inner);
                         $('#selectProducto').removeAttr("disabled");
@@ -82,24 +112,119 @@
             });
         });
 
+        $('#selectProducto').change(function(e) {
+            e.preventDefault();
+            var idProductoSelect = $('#selectProducto option:selected').val();
+            productos.forEach(element => {
+                if (element.id == idProductoSelect) {
+                    $('#precio').val(element.precioCompra);
+                }
+            });
+
+
+        });
+
         $('#agregarProducto').click(function(e) {
             e.preventDefault();
+            var unico = true;
+            var cont = 0;
+            cargarDatosItem();
+            if (cantidad > 0) {
+                if (!carrito) {
+                    carrito = [];
+                }
 
-            // var proveedores = @json($proveedores);
-            var prueba = @json($carrito);
-            var jsonStr =
-                '{"idProdcuto":' + $('#selectProducto').val() + ',"producto":' + $('#') + '}';
-            var onj = JSON.parse(jsonStr);
-            prueba.push(onj);
-            jsonStr =
-                '{"teamId":"2","status":"member"}';
-            onj = JSON.parse(jsonStr);
-            prueba.push(onj);
-            jsonStr = '{"teamId": "3","status": "member"}';
-            onj = JSON.parse(jsonStr);
-            prueba.push(onj);
-            console.log(<?php echo $carrito; ?>);
-            console.log(prueba);
+                carrito.forEach(element => {
+                    console.log(cont);
+                    if (element.idProducto == idProducto) {
+                        element.Cantidad = cantidad;
+                        unico = false;
+                    }
+                });
+                if (unico) {
+                    var item = {
+                        'idProducto': idProducto,
+                        'Producto': producto,
+                        'Precio': precio,
+                        'Cantidad': cantidad
+                    };
+                    carrito.push(item);
+                }
+                cargarCarrito();
+                $('#cantidad').val(null);
+
+            }
+
+
         });
+
+        $('#agregarCompra').click(function(e) {
+            e.preventDefault();
+
+            $('#option').val(2);
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('compras.create') }}',
+                data: $('#formProveedores').serialize(),
+                success: function() {
+                    console.log('hey')
+                }
+            });
+        })
+
+        function cargarDatosItem() {
+            idProducto = parseInt($('#selectProducto').val());
+            producto = $('#selectProducto option:selected').text();
+            precio = parseFloat($('#precio').val());
+            cantidad = parseInt($('#cantidad').val());
+        };
+
+        function cargarCarrito() {
+            var inner = "";
+            var cont = 0
+            total = 0;
+            if (carrito.length > 0) {
+                $('#agregarCompra').removeAttr("hidden");
+            } else {
+                console.log('entro pero le valio xd');
+                $('#agregarCompra').add('hidden');
+                $('#agregarCompra').attr("disabled");
+            }
+            carrito.forEach(element => {
+                var subtotal = parseFloat(element.Precio) * parseFloat(element.Cantidad);
+                inner += "<tr>" +
+                    "<th > <button class='btn btn-danger' onclick='quitarItem(" + cont +
+                    ")'>❌</button> </th>" +
+                    "<th >" + element.Producto + "</th>" +
+                    "<th >" + element.Precio + "</th>" +
+                    "<th >" + element.Cantidad + "</th>" +
+                    "<th >" + subtotal + "</th>" +
+                    "</tr>";
+                total += subtotal;
+                cont++;
+            });
+            $('#total').text(total);
+            $('#tblProductos').html(inner);
+
+
+        };
+
+        function limpiarDatos() {
+            idProducto = null;
+            producto = null;
+            precio = null;
+            cantidad = null;
+            carrito = [];
+
+        };
+
+        function quitarItem(contador) {
+            if (contador == 0) {
+                carrito.shift();
+            } else {
+                carrito.splice(contador, contador);
+            }
+            cargarCarrito();
+        };
     </script>
 @endpush
