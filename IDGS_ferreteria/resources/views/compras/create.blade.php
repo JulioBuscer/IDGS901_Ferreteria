@@ -1,6 +1,6 @@
-<form id="formProveedores" name="formProveedores" method="HEAD" action=" {{ route('compras.create') }} ">
+<form id="formProveedores" name="formProveedores" action=" {{ route('compras.store') }} ">
     <div class="container row">
-        <div class="col-10">
+        <div class="col">
             <div class="">
                 {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-label']) !!}
                 <select name="selectProveedor" id="selectProveedor" required style="width: 50vh" class="form-select">
@@ -20,18 +20,37 @@
 
             <div class="">
                 {!! Form::label('precio', 'Precio Compra', ['class' => 'form-label']) !!}
-                {!! Form::number('precio', null, ['class' => 'form-input', 'readonly']) !!}
+                {!! Form::number('precio', null, ['class' => 'form-input', 'readonly', 'placeholder' => '0.0']) !!}
 
                 {!! Form::label('cantidad', 'Cantidad', ['class' => 'form-label']) !!}
                 {!! Form::number('cantidad', null, ['class' => 'form-input', 'placeholder' => '0']) !!}
 
                 <input type="number" value="0" name="option" id="option" readonly hidden>
+                <input type="number" value="0" name="index" id="index" readonly hidden>
 
                 <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
                         class="fas fa-box-open"></i></button>
 
             </div>
 
+        </div>
+
+        <div class="col">
+            <table id="tablaCarrito" name="tablaCarrito" class="table text-center">
+                <thead>
+                    <tr>
+                        <th>❌</th>
+                        <th hidden>ID</th>
+                        <th>Producto</th>
+                        <th>Costo</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody name="tblProductos" id="tblProductos">
+
+                </tbody>
+            </table>
         </div>
         <div class="col-2">
             <div class="card">
@@ -44,22 +63,6 @@
             </div>
         </div>
 
-    </div>
-    <div class="container row">
-        <table id="tablaCarrito" name="tablaCarrito" class="table text-center">
-            <thead>
-                <tr>
-                    <th>❌</th>
-                    <th>Producto</th>
-                    <th>Costo</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody name="tblProductos" id="tblProductos">
-
-            </tbody>
-        </table>
     </div>
 </form>
 {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
@@ -130,44 +133,31 @@
             var cont = 0;
             cargarDatosItem();
             if (cantidad > 0) {
-                if (!carrito) {
-                    carrito = [];
-                }
-
-                carrito.forEach(element => {
-                    console.log(cont);
-                    if (element.idProducto == idProducto) {
-                        element.Cantidad = cantidad;
-                        unico = false;
+                $('#option').val(2);
+                console.log(carrito);
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('compras.create') }}',
+                    data: $('#formProveedores').serialize(),
+                    success: function(data) {
+                        carrito = data;
+                        cargarCarrito();
+                        $('#cantidad').val(null);
                     }
                 });
-                if (unico) {
-                    var item = {
-                        'idProducto': idProducto,
-                        'Producto': producto,
-                        'Precio': precio,
-                        'Cantidad': cantidad
-                    };
-                    carrito.push(item);
-                }
-                cargarCarrito();
-                $('#cantidad').val(null);
-
             }
-
-
         });
 
         $('#agregarCompra').click(function(e) {
-            e.preventDefault();
-
-            $('#option').val(2);
+            // e.preventDefault();
+            $('#option').val(4);
+            console.log(carrito);
             $.ajax({
                 type: 'GET',
-                url: '{{ route('compras.create') }}',
+                url: '{{ route('compras.store') }}',
                 data: $('#formProveedores').serialize(),
-                success: function() {
-                    console.log('hey')
+                success: function(salida) {
+                    console.log(salida);
                 }
             });
         })
@@ -219,6 +209,18 @@
         };
 
         function quitarItem(contador) {
+            event.preventDefault();
+            $('#option').val(3);
+            $('#index').val(contador);
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('compras.create') }}',
+                data: $('#option').val(3),
+                success: function(data) {
+                    carrito = data;
+                }
+            });
+
             if (contador == 0) {
                 carrito.shift();
             } else {

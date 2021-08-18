@@ -52,7 +52,7 @@
 
             <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
                 <div class="card-body">
-                    <h2 class="card-title text-left">Proveedores Registro</h2>
+                    <h2 class="card-title text-left">Compra Registro</h2>
                     <hr class="hr-245">
                     <div class="col form-outline  m-2">
 

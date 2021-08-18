@@ -27,8 +27,8 @@ class ProveedoresController extends Controller
         $sql = 'SELECT pp.id, pp.idProducto, pp.idProveedor, p.nombre, pp.precioCompra FROM proveedor_producto AS pp INNER JOIN producto AS p ON (pp.idProducto=p.id) WHERE active = 1';
         $proveedores_prodcutos = Db::select($sql);
         $modelo = Proveedores::find(0);
-        $table = Proveedores::orderBy('empresa','ASC')->get();
-        $productos = ProductoModel::orderBy('nombre','ASC')->get();
+        $table = Proveedores::orderBy('empresa', 'ASC')->get();
+        $productos = ProductoModel::orderBy('nombre', 'ASC')->get();
         return view('proveedores.index ', compact('modelo', 'table', 'productos',  'proveedores_prodcutos'));
     }
 
@@ -156,8 +156,8 @@ class ProveedoresController extends Controller
             $request->session()->flash('message', 'Proveedor Editado');
         }
 
-        // $mProveedores->save();
-        // return FacadesRedirect::to('proveedores');
+        $mProveedores->save();
+        return FacadesRedirect::to('proveedores');
     }
 
     /**
