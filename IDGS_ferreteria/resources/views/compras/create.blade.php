@@ -1,8 +1,8 @@
-<form id="formProveedores" name="formProveedores" action=" {{ route('compras.store') }} ">
+<form id="formProveedores" name="formProveedores" action=" {{ route('compras.create') }} ">
     <div class="container row">
-        <div class="col">
+        <div class="col-4">
             <div class="">
-                {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-label']) !!}
+                {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}
                 <select name="selectProveedor" id="selectProveedor" required style="width: 50vh" class="form-select">
                     <option value="">Seleccione un proveedor</option>
                     @forelse ($proveedores as $proveedor)
@@ -12,31 +12,37 @@
                     @endforelse
                 </select>
 
-                {!! Form::label('selectProducto', 'Productos', ['class' => 'form-label ']) !!}
+                {!! Form::label('selectProducto', 'Productos', ['class' => 'form-control ']) !!}
                 <select name="selectProducto" id="selectProducto" required style="width: 50vh" disabled
                     class="form-select">
                 </select>
             </div>
 
-            <div class="">
-                {!! Form::label('precio', 'Precio Compra', ['class' => 'form-label']) !!}
-                {!! Form::number('precio', null, ['class' => 'form-input', 'readonly', 'placeholder' => '0.0']) !!}
+            <div class="row">
+                <div class="col">
+                    {!! Form::label('precio', 'Precio Compra', ['class' => 'form-control']) !!}
+                    {!! Form::number('precio', null, ['class' => 'form-input', 'readonly', 'placeholder' => '0.0']) !!}
 
-                {!! Form::label('cantidad', 'Cantidad', ['class' => 'form-label']) !!}
-                {!! Form::number('cantidad', null, ['class' => 'form-input', 'placeholder' => '0']) !!}
-
+                </div>
+                <div class="col">
+                    {!! Form::label('cantidad', 'Cantidad', ['class' => 'form-control']) !!}
+                    {!! Form::number('cantidad', null, ['class' => 'form-input', 'placeholder' => '0']) !!}
+                </div>
                 <input type="number" value="0" name="option" id="option" readonly hidden>
                 <input type="number" value="0" name="index" id="index" readonly hidden>
-
-                <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
-                        class="fas fa-box-open"></i></button>
-
             </div>
+            <div class="">
+                {!! Form::label('descripcion', 'Descripcion', ['class' => 'form-control']) !!}
+                {!! Form::textarea('descripcion', null, ['class' => 'form-area', 'rows' => 4]) !!}
+            </div>
+
+            <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
+                    class="fas fa-box-open"></i></button>
 
         </div>
 
-        <div class="col">
-            <table id="tablaCarrito" name="tablaCarrito" class="table text-center">
+        <div class="col ml-1">
+            <table id="tablaCarrito" name="tablaCarrito" class="table text-center bordered">
                 <thead>
                     <tr>
                         <th>❌</th>
@@ -52,15 +58,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-2">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Total</h5>
-                    <h3 id="total" name=total class="card-text text-success"></h3>
-                    <button id="agregarCompra" name="agregarCompra" hidden class="btn btn-color-2" /><i
-                        class="fas fa-save"></i> </button>
-                </div>
-            </div>
+        <div class="col-2 text-center">
+            <h2 class="card-title">Total</h2>
+            <h3 id="total" name=total class="card-text text-success"></h3>
+            <button id="agregarCompra" name="agregarCompra" hidden class="btn btn-color-2" /><i class="fas fa-save"></i>
+            </button>
         </div>
 
     </div>
@@ -151,15 +153,6 @@
         $('#agregarCompra').click(function(e) {
             // e.preventDefault();
             $('#option').val(4);
-            console.log(carrito);
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('compras.store') }}',
-                data: $('#formProveedores').serialize(),
-                success: function(salida) {
-                    console.log(salida);
-                }
-            });
         })
 
         function cargarDatosItem() {
@@ -193,7 +186,8 @@
                 total += subtotal;
                 cont++;
             });
-            $('#total').text(total);
+
+            $('#total').text('$' + parseFloat(total));
             $('#tblProductos').html(inner);
 
 

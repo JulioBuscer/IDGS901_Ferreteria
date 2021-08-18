@@ -176,7 +176,7 @@
                 <hr class="hr-245">
                 <div class="col form-outline  m-2">
                     <table name="tablaProveedoresInactivos" id="tablaProveedoresInactivos">
-                        <thead class="table-dark text-center">
+                        <thead class="table-danger text-center">
                             <th>PROVEEDOR</th>
                             <th>REPRESENTANTE</th>
                             <th>EMAIL</th>

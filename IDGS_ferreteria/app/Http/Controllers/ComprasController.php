@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Compras;
 use App\Models\detalle_compra;
 use App\Models\ProductoModel;
+use App\Models\Proveedor;
+use App\Models\User;
+use DetalleCompra;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +32,45 @@ WHERE active=1 group by p.id';
         $proveedores = Db::select($sql);
         $modelo = ProductoModel::find(0);
         // $proveedores = Proveedores::orderBy('empresa', 'ASC')->get();
-        return view('compras.index ', compact('modelo', 'proveedores'));
+        $compras = Compras::orderBy('id', 'ASC')->get();
+        $detalles_compras = detalle_compra::orderBy('idCompra', 'ASC')->get();
+
+        $compras_completas = [];
+        $cont = 0;
+        $detener = false;
+        foreach ($compras as $compra) {
+            $temp_detalle = [];
+
+            for ($cont; $cont < count($detalles_compras); $cont++) {
+                if ($detalles_compras[$cont]->idCompra == $compra->id) {
+                    $tmp_prod = ProductoModel::find($detalles_compras[$cont]->idProducto);
+                    $item = [
+                        'Producto' => $tmp_prod->nombre,
+                        'Precio' => $detalles_compras[$cont]->precio,
+                        'Cantidad' => $detalles_compras[$cont]->cantidad,
+                        'Subtotal' => $detalles_compras[$cont]->precio * $detalles_compras[$cont]->cantidad
+                    ];
+                    array_push($temp_detalle, $detalles_compras[$cont]);
+                } else $detener = true;
+                if ($detener) break;
+            }
+            $tmp_prov = Proveedor::find($compra->idProveedor);
+            $tmp_usr = User::find($compra->idUser);
+            $tmp_comp = [
+                'id' => $compra->id,
+                'Proveedor' => $tmp_prov->empresa,
+                'Descripcion' => $compra->descripcion,
+                'Total' => $compra->total,
+                'FechaPedido' => $compra->fechaPedido,
+                'FechaEntrega' => $compra->fechaEntrega,
+                'Empleado' => $tmp_usr->name,
+                'status' => $compra->estatus
+            ];
+            $temp = ['Compra' => $tmp_comp, 'Detalle' => $temp_detalle];
+            array_push($compras_completas, $temp);
+        }
+
+        return view('compras.index ', compact('modelo', 'proveedores', 'compras', 'detalles_compras', 'compras_completas'));
     }
 
     /**
@@ -83,6 +124,44 @@ WHERE active=1 group by p.id';
                 session(["carrito" => $carrito]);
                 return ($carrito);
                 break;
+            case 4:
+                $total = 0;
+                $carrito = session('carrito');
+                try {
+
+                    foreach ($carrito as $item) {
+                        $total +=  ($item['Precio'] * $item['Cantidad']);
+                    }
+
+                    $mCompra = new Compras();
+                    $mCompra->total = $total;
+                    $mCompra->fechaPedido = now(); //$request->fechaPedido;
+                    $mCompra->fechaEntrega = " "; //$request->fechaEntrega;
+                    $mCompra->estatus = 1;
+                    $mCompra->descripcion = "N/A";
+                    $mCompra->idProveedor = $request->selectProveedor;
+                    $mCompra->idUser = Auth::user()->id;
+                    $mCompra->save();
+
+                    $mCompra = Compras::latest('id')->first();
+
+                    foreach ($carrito as $item) {
+                        $mDetalleCompra = new detalle_compra();
+                        $mDetalleCompra->cantidad = $item['Cantidad'];
+                        $mDetalleCompra->precio = $item['Precio'];
+                        $mDetalleCompra->idProducto = $item['idProducto'];
+                        $mDetalleCompra->idCompra = $mCompra['id'];
+                        $mDetalleCompra->save();
+                    }
+                    $request->session()->flash('message', 'Compra Agregada');
+                } catch (\Throwable $th) {
+
+                    $request->session()->flash('message', 'Compra No Agregada' . $th);
+                }
+                $carrito = [];
+                session(["carrito" => $carrito]);
+
+                return FacadesRedirect::to('compras');
         }
     }
 
@@ -94,36 +173,6 @@ WHERE active=1 group by p.id';
      */
     public function store(Request $request)
     {
-        $total = 0;
-        $carrito = session('carrito');
-
-        foreach ($carrito as $item) {
-            $total +=  ($item['Precio'] * $item['Cantidad']);
-        }
-
-        $mCompra = new Compras();
-        $mCompra->total = $total;
-        $mCompra->fechaPedido = "2021/05/10"; //$request->fechaPedido;
-        $mCompra->fechaEntrega = "18/08/2021"; //$request->fechaEntrega;
-        $mCompra->estatus = 1;
-        $mCompra->idProveedor = $request->selectProveedor;
-        $mCompra->idUser = Auth::user()->id;
-        $mCompra->save();
-
-        $mCompra = Compras::latest('id')->first();
-
-        foreach ($carrito as $item) {
-            $mDetalleCompra = new detalle_compra();
-            $mDetalleCompra->cantidad = $item['Cantidad'];
-            $mDetalleCompra->precio = $item['Precio'];
-            $mDetalleCompra->idProducto = $item['idProducto'];
-            $mDetalleCompra->idCompra = $mCompra['id'];
-            $mDetalleCompra->save();
-        }
-
-        $request->session()->flash('message', 'Producto Agregado a Proveedor');
-
-        return FacadesRedirect::to('compras');
     }
 
     /**
@@ -132,9 +181,10 @@ WHERE active=1 group by p.id';
      * @param  \App\Models\Compras  $compras
      * @return \Illuminate\Http\Response
      */
-    public function show(Compras $compras)
+    public function show($compras)
     {
-        //
+        $modelo = [];
+        return view('compras.show', compact('modelo'));
     }
 
     /**
