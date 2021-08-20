@@ -58,9 +58,6 @@
                         </thead>
                         <tbody>
                             @forelse ($compras_completas as $compra_completa)
-                                {{-- {{ var_dump($compra_completa) }} --}}
-                                {{-- {{ $compra_completa['Compra']['id'] }} --}}
-                                {{-- {{ $compra_completa['Detalle'][0] }} --}}
                                 @if ($compra_completa['Compra']['status'] == 1)
                                     <tr>
                                         <td hidden>{{ $compra_completa['Compra']['id'] }}</td>
@@ -90,7 +87,8 @@
                                                                     data-mdb-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                @include('compras.show',$modelo=$compra_completa['Detalle'])
+                                                                {{-- {{ var_dump($compra_completa['Detalle'])}} --}}
+                                                                @include('compras.show')
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary "

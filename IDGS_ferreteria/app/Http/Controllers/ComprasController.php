@@ -50,7 +50,7 @@ WHERE active=1 group by p.id';
                         'Cantidad' => $detalles_compras[$cont]->cantidad,
                         'Subtotal' => $detalles_compras[$cont]->precio * $detalles_compras[$cont]->cantidad
                     ];
-                    array_push($temp_detalle, $detalles_compras[$cont]);
+                    array_push($temp_detalle, $item);
                 } else $detener = true;
                 if ($detener) break;
             }
@@ -181,10 +181,10 @@ WHERE active=1 group by p.id';
      * @param  \App\Models\Compras  $compras
      * @return \Illuminate\Http\Response
      */
-    public function show($compras)
+    public function show()
     {
-        $modelo = [];
-        return view('compras.show', compact('modelo'));
+        
+        return view('compras.show');
     }
 
     /**
