@@ -185,3 +185,34 @@ function actualizarFotoEmpleado() {
         fr.readAsDataURL(fileChooser.files[0]);
     }
 }
+
+// Funciones para Clientes
+
+function editarCliente(id, nombre, app, apm, rfc, direccion, correo, idPersona, tel) {
+    $('#idClie').val(id);
+    $('#idPer').val(idPersona);
+    $('#nombre1').val(nombre);
+    $('#App1').val(app);
+    $('#Apm1').val(apm);
+    $('#tel1').val(tel);
+    $('#email1').val(correo);
+    $('#rfc1').val(rfc);
+    $('#direccion1').val(direccion);
+
+    var ruta = Route_esp + "Clientes/" + id
+
+    $('#editCat').attr('action', ruta);
+}
+
+function verCliente(id, nombre, app, apm, rfc, direccion, correo, idPersona, tel) {
+
+    $('#nombre2').val(nombre);
+    $('#App2').val(app);
+    $('#Apm2').val(apm);
+    $('#tel2').val(tel);
+    $('#email2').val(correo);
+    $('#rfc2').val(rfc);
+    $('#direccion2').val(direccion);
+
+
+}

@@ -132,7 +132,7 @@ class EmpleadoController extends Controller
             'email1' => 'required',
             'slcRol1' => 'required'
         ]);
-
+        
         DB::beginTransaction();
 
         $registroPersona = Persona::find($request->idPer);
@@ -145,6 +145,10 @@ class EmpleadoController extends Controller
         $registroEmpleado =Empleado::find($id);
         $registroEmpleado->name = $request->nombre1;
         $registroEmpleado->email = $request->email1;
+        if($request->password1){
+            $registroEmpleado->password = bcrypt($request->password1);
+
+        }
         $registroEmpleado->active = "1";
         $registroEmpleado->token = "1";
         $registroEmpleado->fotografia = $request->textarea0;
