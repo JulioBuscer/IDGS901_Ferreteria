@@ -88,9 +88,16 @@
     box-shadow: 0 0 0 .2rem rgba(182, 25, 5, 0.5)
 }
 
+
 /* slider */
 
-.carousel-item img{
+.carousel-item img {
     min-height: 400px;
     max-height: 600px;
+}
+
+.scrollspy-example {
+    position: relative;
+    height: 700px;
+    overflow: auto;
 }

@@ -17,20 +17,28 @@ use Inertia\Inertia;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', 'SiteController@home')->name('home');
-
     // Agregamos los recursos de proveedores
     Route::resource('proveedores', 'ProveedoresController');
 
     // Agregamos los recursos de compras
     Route::resource('compras', 'ComprasController');
+    Route::resource('/Productos', 'ProductosController');
+    Route::resource('/Categorias', 'CategoriaController');
+    Route::resource('/proveedores_productos', 'ProveedoresProductosController');
+
+    Route::resource('cart', 'CartController');
+
+    Route::resource('/Venta', 'SalesController');
 });
-Route::resource('/Productos', 'ProductosController');
-Route::resource('/Categorias', 'CategoriaController');
-Route::put('/Categorias', 'CategoriasController@update');
-Route::get('/login', 'SiteController@login')->name('login');
-Route::post('/login', 'SiteController@loginPost');
-Route::get('/logout', 'SiteController@logout');
+
+Route::resource('/Catalogo', 'CatalogoProductos');
+Route::get('/', 'SiteController@home')->name('home');
+Route::get('/login', 'UsersController@login')->name('login');
+Route::post('/login', 'UsersController@loginPost');
+Route::get('/logout', 'UsersController@logout');
+Route::get('/contacto', 'SiteController@contacto')->name('contacto');
+Route::get('/nosotros', 'SiteController@nosotros')->name('nosotros');
+
 
 
 /*Route::get('/', function () {

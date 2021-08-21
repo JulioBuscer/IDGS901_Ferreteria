@@ -21,7 +21,7 @@ class CreateCompra extends Migration
             $table->string('estatus');
             $table->string('descripcion');
             $table->foreignId('idProveedor')->nullable()->constrained()->references('id')->on('proveedor');
-            $table->foreignId('idDetalleCompra')->nullable()->constrained()->references('id')->on('detalle_compra');
+            $table->foreignId('idUser')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
         });
     }
