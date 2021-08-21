@@ -23,7 +23,7 @@ class CatalogoProductos extends Controller
     {  
         if(Auth::user()){
             if(Auth::user()->id_rol == 2){
-                $sql = 'SELECT p.id,p.nombre,p.descripcion,p.precio,p.cantidad,p.unidad,p.fotografia, c.descripcion as descripcionCat, c.id as idCat FROM  producto AS p INNER JOIN categoria AS c ON (p.idCategoria = c.id) WHERE active = 1';
+                $sql = 'SELECT p.id,p.nombre,p.descripcion,p.precio,p.cantidad,p.unidad,p.fotografia, c.descripcion as descripcionCat, c.id as idCat FROM  producto AS p INNER JOIN categoria AS c ON (p.idCategoria = c.id) WHERE active = 1 AND cantidad>0';
                 $table = Db::select($sql);
                 $select = CategoriaModel::all();
                 $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";
@@ -34,7 +34,7 @@ class CatalogoProductos extends Controller
             }
             
         }else{
-            $sql = 'SELECT p.id,p.nombre,p.descripcion,p.precio,p.cantidad,p.unidad,p.fotografia, c.descripcion as descripcionCat, c.id as idCat FROM  producto AS p INNER JOIN categoria AS c ON (p.idCategoria = c.id) WHERE active = 1';
+            $sql = 'SELECT p.id,p.nombre,p.descripcion,p.precio,p.cantidad,p.unidad,p.fotografia, c.descripcion as descripcionCat, c.id as idCat FROM  producto AS p INNER JOIN categoria AS c ON (p.idCategoria = c.id) WHERE active = 1 AND cantidad>0';
                 $table = Db::select($sql);
                 $select = CategoriaModel::all();
                 $toClient = "SELECT cliente.id, concat(p.nombre, ' ', p.apellidoP, ' ', p.apellidoM) as nombre, cliente.direccion, cliente.rfc  FROM persona p INNER JOIN cliente ON cliente.idPersona = p.id";

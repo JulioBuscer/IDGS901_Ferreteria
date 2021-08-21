@@ -32,7 +32,7 @@
     </div>
 </div>
 <div class="text-right">
-    <button type="submit" class="btn btn-color-2" />
+    <button type="submit" class="btn btn-color-2">
     <i class="fas fa-save"></i>
     </button>
 </div>

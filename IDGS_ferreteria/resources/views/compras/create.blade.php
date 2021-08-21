@@ -1,5 +1,5 @@
 <form id="formProveedores" name="formProveedores" action=" {{ route('compras.create') }} ">
-    <div class="container row">
+    <div class="row">
         <div class="col-4">
             <div class="">
                 {!! Form::label('selectProveedor', 'Proveedores', ['class' => 'form-control']) !!}

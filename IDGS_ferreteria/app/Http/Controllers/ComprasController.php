@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect as FacadesRedirect;
-
+use App\Notifications\RealTimeNotification;
 
 class ComprasController extends Controller
 {
@@ -155,6 +155,8 @@ WHERE active=1 group by p.id';
                             $mDetalleCompra->idCompra = $mCompra['id'];
                             $mDetalleCompra->save();
                         }
+                        $user = User::find(1);
+                        $user->notify(new RealTimeNotification("El usuario ".Auth::user()->name." termino una compra (No. ".$mCompra['id'].")"));
                         $request->session()->flash('message', 'Compra Agregada');
                     } catch (\Throwable $th) {
 
