@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
-
+use Auth;
 class RealTimeNotification extends Notification implements ShouldBroadcast
 {
 
@@ -18,7 +18,7 @@ class RealTimeNotification extends Notification implements ShouldBroadcast
 
     public function via($notifiable): array
     {
-        return ['broadcast'];
+        return ['broadcast','database'];
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
@@ -26,5 +26,16 @@ class RealTimeNotification extends Notification implements ShouldBroadcast
         return new BroadcastMessage([
             'message' => "$this->message (User $notifiable->id)"
         ]);
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return $this->message;
     }
 }

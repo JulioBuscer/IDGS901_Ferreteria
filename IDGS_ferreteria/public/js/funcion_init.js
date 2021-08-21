@@ -1,3 +1,27 @@
+//Función para notificaciones
+
+
+
+function getNotificationsCount(user) {
+
+
+
+    var userLog = user;
+    $.ajax({
+        url: 'http://localhost/IDGS901_Ferreteria/IDGS_ferreteria/public/getNotifications',
+        type: 'GET',
+        data: { getVariable: userLog },
+    })
+        .done(function (data) {
+            console.log(data[0].unRead);
+            $('#ntC').text(data[0].unRead);
+        })
+        .fail(function () {
+            console.log('Failed');
+        });
+}
+
+
 // FUNCIONES PARA CATEGORIAS
 // window.onload = function() {
 //     // In your Javascript (external .js resource or <script> tag)
@@ -69,7 +93,7 @@ function cargarFotoProducto() {
     var base64 = document.getElementById("textarea");
     if (fileChooser.files.length > 0) {
         var fr = new FileReader();
-        fr.onload = function() {
+        fr.onload = function () {
             foto.src = fr.result;
             base64.value = foto.src.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '');
         }
@@ -84,7 +108,7 @@ function actualizarFotoProducto() {
     var base64 = document.getElementById("textarea0");
     if (fileChooser.files.length > 0) {
         var fr = new FileReader();
-        fr.onload = function() {
+        fr.onload = function () {
             foto.src = fr.result;
             base64.value = foto.src.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '');
         }

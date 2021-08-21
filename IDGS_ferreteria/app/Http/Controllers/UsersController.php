@@ -6,6 +6,8 @@ use Redirect;
 use Illuminate\Http\Request;
 use Cart;
 use App\Notifications\RealTimeNotification;
+use App\Events\NewMessage;
+use App\Models\User;
 class UsersController extends Controller
 {
     public function login(){
@@ -31,8 +33,8 @@ class UsersController extends Controller
         if (Auth::attempt($credentials)) {
             // echo var_dump(Auth::user());
             if(Auth::user()->active=='1'){
-                $user = Auth::user();
-                $user->notify(new RealTimeNotification('Hello World'));
+                $user = User::find(1);
+                $user->notify(new RealTimeNotification("El usuario ".Auth::user()->name." entro al sistema"));
                 return Redirect::to('/');
             }else{
                 

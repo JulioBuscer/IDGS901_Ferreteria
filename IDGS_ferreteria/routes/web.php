@@ -25,10 +25,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/Productos', 'ProductosController');
     Route::resource('/Categorias', 'CategoriaController');
     Route::resource('cart', 'CartController');
-    Route::resource('venta_terminada', 'TerminarCompra');
-    Route::resource('/Venta', 'SalesController');
+    Route::resource('venta_terminada', 'SalesController');
+    Route::resource('/notifications', 'NotificationsController');
+    Route::get('/getNotifications', 'NotificationsController@getNotifications');
 });
 
+Route::fallback(function () {
+    return view('site.404');
+});
+Route::resource('/tyc', 'TyCController');
 Route::resource('/Catalogo', 'CatalogoProductos');
 Route::get('/', 'SiteController@home')->name('home');
 Route::get('/login', 'UsersController@login')->name('login');

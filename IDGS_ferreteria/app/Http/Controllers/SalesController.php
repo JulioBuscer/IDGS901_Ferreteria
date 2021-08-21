@@ -11,7 +11,7 @@ use DateTimeZone;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Models\ProductoModel;
-class TerminarCompra extends Controller
+class SalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,9 @@ class TerminarCompra extends Controller
      */
     public function index()
     {   
-        foreach(Cart::getContent() as $row){
-            echo $row->id;
-        }
-        
+        $sql = 'SELECT * FROM venta';
+        $ventas = Db::select($sql);
+        return view('ventas.index', compact('ventas'));
         //
     }
 
