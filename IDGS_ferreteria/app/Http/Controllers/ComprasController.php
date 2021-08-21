@@ -140,7 +140,7 @@ WHERE active=1 group by p.id';
                         $mCompra->fechaPedido = now(); //$request->fechaPedido;
                         $mCompra->fechaEntrega = " "; //$request->fechaEntrega;
                         $mCompra->estatus = 1;
-                        $mCompra->descripcion = $request->descripcion;
+                        $mCompra->descripcion = $request->descripcion . " ";
                         $mCompra->idProveedor = $request->selectProveedor;
                         $mCompra->idUser = Auth::user()->id;
                         $mCompra->save();
@@ -169,28 +169,31 @@ WHERE active=1 group by p.id';
             echo ($e);
         }
         if ($request->idSelected) {
-
-            echo ($request->opcion);
-            echo ('Entro' . $request->opcion);
             $mCompra = Compras::find($request->idSelected);
             switch ($request->opcion) {
                 case "Recibir":
                     $mCompra->estatus = 2;
                     $mCompra->fechaEntrega = now();
+                    $detalles_compras = detalle_compra::where('idCompra', $mCompra->id)->get();
+
+
+                    foreach ($detalles_compras as $detalle_compra) {
+                        $tmp_prod = ProductoModel::find($detalle_compra->idProducto);
+                        $cantTotal = floatval($detalle_compra->cantidad) + floatval($tmp_prod->cantidad);
+                        $tmp_prod->cantidad = $cantTotal;
+                        $tmp_prod->save();
+                    }
                     $mCompra->save();
+                    return FacadesRedirect::to('compras');
                     break;
                 case "Cancelar":
                     $mCompra->estatus = 0;
                     $mCompra->fechaEntrega = now();
                     $mCompra->save();
+                    return FacadesRedirect::to('compras');
                     break;
             }
-
-            return FacadesRedirect::to('compras');
-        } else {
-            echo ('No entro');
         }
-        return FacadesRedirect::to('compras');
     }
 
     /**

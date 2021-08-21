@@ -36,6 +36,9 @@ Route::get('/', 'SiteController@home')->name('home');
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/login', 'UsersController@loginPost');
 Route::get('/logout', 'UsersController@logout');
+Route::get('/contacto', 'SiteController@contacto')->name('contacto');
+Route::get('/nosotros', 'SiteController@nosotros')->name('nosotros');
+
 
 
 /*Route::get('/', function () {

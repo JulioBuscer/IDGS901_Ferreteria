@@ -177,17 +177,20 @@
                 <div class="col form-outline  m-2">
                     <table name="tablaProveedoresInactivos" id="tablaProveedoresInactivos">
                         <thead class="table-dark text-center">
-                            <th hidden>ID</th>
-                            <th>PROVEEDOR</th>
-                            <th>REPRESENTANTE</th>
-                            <th>EMAIL</th>
-                            <th>TELEFONO</th>
-                            <th>RFC</th>
-                            <th>DIRECCION</th>
-                            @if (\Auth::user()->id_rol == 1)
-                                <th>ACCIONES</th>
-                            @endif
+                            <tr>
 
+                                <th hidden>ID</th>
+                                <th>PROVEEDOR</th>
+                                <th>REPRESENTANTE</th>
+                                <th>EMAIL</th>
+                                <th>TELEFONO</th>
+                                <th>RFC</th>
+                                <th>DIRECCION</th>
+                                @if (\Auth::user()->id_rol == 1)
+                                    <th>ACCIONES</th>
+                                @endif
+
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -250,8 +253,6 @@
     <script>
         $(document).ready(function() {
             $('#tablaProveedoresInactivos').DataTable();
-        });
-        $(document).ready(function() {
             $('#tablaProveedoresActivos').DataTable();
         });
     </script>

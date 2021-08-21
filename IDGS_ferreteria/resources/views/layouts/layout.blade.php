@@ -163,6 +163,22 @@
 
 
                                         @guest
+
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('contacto') }}">
+                                                    Contacto
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('nosotros') }}">
+                                                    Nosotros
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
                                             <li class="nav-item">
                                                 <a class="nav-link waves-effect waves-light white-text font-weight-bold"
                                                     href="{{ URL::to('login') }}">
@@ -170,6 +186,7 @@
                                                     <span class="sr-only">(current)</span>
                                                 </a>
                                             </li>
+
                                         @else
 
                                             @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)

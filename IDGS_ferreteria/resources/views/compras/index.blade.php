@@ -3,12 +3,26 @@
 @section('content')
 
     @if (Session::has('message'))
-        <br>{{ Session::get('message') }} <br>
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: "{{ Session::get('message') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
     @endif
+    @if (sizeof($errors) > 0)
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: '{{ HTML::ul($errors->all()) }}'
+            })
+        </script>
 
-    {{ HTML::ul($errors->all()) }}
-
-
+    @endif
     <div class="m-5">
         <form id="formCompra" name="formCompra" action=" {{ route('compras.create') }}">
             <input type=" text" value="0" name="opcion" id="opcion" readonly hidden>
@@ -226,7 +240,7 @@
                 url: '{{ route('compras.create') }}',
                 data: $('#formCompra').serialize(),
                 success: function(data) {
-                    window.location.reload();
+                    console.log(data);
                 }
             });
         }
@@ -240,6 +254,8 @@
                 url: '{{ route('compras.create') }}',
                 data: $('#formCompra').serialize(),
                 success: function(data) {
+                    console.log(data);
+
                     window.location.reload();
                 }
             });
