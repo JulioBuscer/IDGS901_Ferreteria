@@ -8,7 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>El clavito</title>
     <script>
-    const Route_esp = "{{ URL::asset('') }}"
+        const Route_esp = "{{ URL::asset('') }}"
     </script>
 
     <!-- Font Awesome -->
@@ -18,13 +18,14 @@
     <!-- Material Design Bootstrap -->
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
         integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{-- JQuery --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -43,7 +44,7 @@
         <!-- Sidebar navigation -->
         <div class="row">
             <div class="col-3 d-flex align-items-center justify-content-center bg-color1 ">
-                <img src="{{asset('img/logo.png')}}" class="nav-bar-logo">
+                <img src="{{ asset('img/logo.png') }}" class="nav-bar-logo">
                 <span class="h1 ">Ferreteria</span>
             </div>
             <!-- Navbar -->
@@ -75,28 +76,28 @@
                                     <!-- Grid column -->
                                     <div class="col-md-6 col-lg-7 text-center text-md-right">
                                         @guest
-                                        <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold"
-                                            href="">
-                                            Bienvenido
-                                            <span class="sr-only">(current)</span>
-                                        </a>
+                                            <a class="ml-0 px-2 waves-effect waves-light white-text font-weight-bold"
+                                                href="">
+                                                Bienvenido
+                                                <span class="sr-only">(current)</span>
+                                            </a>
                                         @else
-                                        <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{ asset('#') }}"
-                                            id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <img src="data:image/jpeg;base64,{{ \Auth::user()->fotografia }}"
-                                                class="rounded-circle" height="25" alt="" loading="lazy" />
-                                            {{ \Auth::user()->name }}
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu"
-                                            aria-labelledby="navbarDropdownMenuLink">
-                                            <li>
-                                                <a class="dropdown-item" href="{{ asset('#') }}">Perfil</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="{{ URL::to('logout') }}">Salir</a>
-                                            </li>
-                                        </ul>
+                                            <a class="dropdown-toggle ml-0 px-2 dark-text" href="{{ asset('#') }}"
+                                                id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img src="data:image/jpeg;base64,{{ \Auth::user()->fotografia }}"
+                                                    class="rounded-circle" height="25" alt="" loading="lazy" />
+                                                {{ \Auth::user()->name }}
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu"
+                                                aria-labelledby="navbarDropdownMenuLink">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ asset('#') }}">Perfil</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ URL::to('logout') }}">Salir</a>
+                                                </li>
+                                            </ul>
 
                                         @endguest
 
@@ -154,7 +155,7 @@
 
                                         <li class="nav-item">
                                             <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('Catalogo')}}">
+                                                href="{{ URL::to('Catalogo') }}">
                                                 Catálogo
                                                 <span class="sr-only">(current)</span>
                                             </a>
@@ -162,50 +163,68 @@
 
 
                                         @guest
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{URL::to('login')}}">
-                                                Iniciar Sesión
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        @else
-                                       
-                                        @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{ URL::to('proveedores') }}">
-                                                Proveedores
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                href="{{ URL::to('compras') }}">
-                                                Compras
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
 
-                                        @endif
-                                        @if(!Cart::isEmpty())
-                                        <li class="nav-item">
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                data-mdb-toggle="modal" data-mdb-target="#modalCart">
-                                                <i class="fas fa-shopping-cart"> ({{Cart::getTotalQuantity()}})</i>
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        @else
-                                        <li class="nav-item">
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('contacto') }}">
+                                                    Contacto
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
 
-                                            <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                data-mdb-toggle="modal" data-mdb-target="#modalCart">
-                                                <i class="fas fa-shopping-cart"> (0)</i>
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>
-                                        @endif
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('nosotros') }}">
+                                                    Nosotros
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('login') }}">
+                                                    Iniciar Sesión
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
+
+                                        @else
+
+                                            @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
+                                                <li class="nav-item">
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        href="{{ URL::to('proveedores') }}">
+                                                        Proveedores
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        href="{{ URL::to('compras') }}">
+                                                        Compras
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+
+                                            @endif
+                                            @if (!Cart::isEmpty())
+                                                <li class="nav-item">
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        data-mdb-toggle="modal" data-mdb-target="#modalCart">
+                                                        <i class="fas fa-shopping-cart">
+                                                            ({{ Cart::getTotalQuantity() }})</i>
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="nav-item">
+
+                                                    <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                        data-mdb-toggle="modal" data-mdb-target="#modalCart">
+                                                        <i class="fas fa-shopping-cart"> (0)</i>
+                                                        <span class="sr-only">(current)</span>
+                                                    </a>
+                                                </li>
+                                            @endif
                                         @endguest
                                     </ul>
                                 </div>
@@ -228,61 +247,62 @@
                     <h5 class="modal-title" id="exampleModalLabel">Venta</h5>
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <!-- {{Form::model(["route"=>["Categorias.update"]])}} -->
+                <!-- {{ Form::model(['route' => ['Categorias.update']]) }} -->
                 <div class="modal-body">
 
                     <div class="col-12">
                         @if (!Cart::isEmpty())
-                        <table class="table">
-                            <thead>
-                                <tr>
+                            <table class="table">
+                                <thead>
+                                    <tr>
 
-                                    <th sc ope="col">#ID</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th sc ope="col">Accion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Cart::getContent() as $item)
-                                <tr>
-                                    <th scope="row">{{$item->id}}</th>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->price}}</td>
-                                    <td>{{$item->quantity}}</td>
-                                    <th scope="row">
-                                        {{Form::open(["route"=>["cart.destroy",$item->id], "method"=>"POST"])}}
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger"> <i class="fas fa-trash"></i>
-                                        </button>
-                                        {{Form::close()}}
-                                    </th>
-                                </tr>
-                                @endforeach
+                                        <th sc ope="col">#ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th sc ope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Cart::getContent() as $item)
+                                        <tr>
+                                            <th scope="row">{{ $item->id }}</th>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->price }}</td>
+                                            <td>{{ $item->quantity }}</td>
+                                            <th scope="row">
+                                                {{ Form::open(['route' => ['cart.destroy', $item->id], 'method' => 'POST']) }}
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger"> <i
+                                                        class="fas fa-trash"></i>
+                                                </button>
+                                                {{ Form::close() }}
+                                            </th>
+                                        </tr>
+                                    @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
                         @else
-                        <table class="table">
-                            <thead>
-                                <tr>
+                            <table class="table">
+                                <thead>
+                                    <tr>
 
-                                    <th sc ope="col">No hay elementos en tu venta</th>
-                                </tr>
-                            </thead>
-                        </table>
+                                        <th sc ope="col">No hay elementos en tu venta</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         @endif
                     </div>
                 </div>
                 @if (!Cart::isEmpty())
-                <div class="modal-footer">
-                    <a href="{{URL::to('cart')}}" class="btn btn-primary">Terminar venta</a>
-                </div>
+                    <div class="modal-footer">
+                        <a href="{{ URL::to('cart') }}" class="btn btn-primary">Terminar venta</a>
+                    </div>
                 @endif
-                <!-- {{Form::close()}} -->
+                <!-- {{ Form::close() }} -->
             </div>
         </div>
     </div>
@@ -369,25 +389,28 @@
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
 
     <script type="text/javascript">
-    /* WOW.js init */
-    // new WOW().init();
-    // Tooltips Initialization
-    $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+        /* WOW.js init */
+        // new WOW().init();
+        // Tooltips Initialization
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').material_select();
-    });
+        // Material Select Initialization
+        $(document).ready(function() {
+            $('.mdb-select').material_select();
+        });
 
-    // SideNav Initialization
-    // $(".button-collapse").sideNav();
+        // SideNav Initialization
+        // $(".button-collapse").sideNav();
     </script>
     {{-- Select 2 --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
     @stack('scripts')
 </body>
 

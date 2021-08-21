@@ -27,8 +27,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/Roles', 'RolController');
     Route::resource('/Empleados', 'EmpleadoController');
     Route::resource('/Clientes', 'ClienteController');
-    Route::put('/ClienteAct/{id}','ClientesController@actualizar');
-    
+    Route::put('/ClienteAct/{id}', 'ClientesController@actualizar');
+
+    Route::resource('/proveedores_productos', 'ProveedoresProductosController');
+
     Route::resource('cart', 'CartController');
 
     Route::resource('/Venta', 'SalesController');
@@ -39,6 +41,9 @@ Route::get('/', 'SiteController@home')->name('home');
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/login', 'UsersController@loginPost');
 Route::get('/logout', 'UsersController@logout');
+Route::get('/contacto', 'SiteController@contacto')->name('contacto');
+Route::get('/nosotros', 'SiteController@nosotros')->name('nosotros');
+
 
 
 /*Route::get('/', function () {
