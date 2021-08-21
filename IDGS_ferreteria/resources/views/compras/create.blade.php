@@ -31,30 +31,34 @@
                 <input type="number" value="0" name="option" id="option" readonly hidden>
                 <input type="number" value="0" name="index" id="index" readonly hidden>
             </div>
+
+            <br>
+            <br>
+            <div class="d-flex justify-content-end">
+                <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
+                        class="fas fa-box-open"></i></button>
+            </div>
             <div class="">
                 {!! Form::label('descripcion', 'Descripcion', ['class' => 'form-control']) !!}
                 {!! Form::textarea('descripcion', null, ['class' => 'form-area', 'rows' => 4]) !!}
             </div>
 
-            <button name="agregarProducto" id="agregarProducto" disabled class="btn btn-success"><i
-                    class="fas fa-box-open"></i></button>
 
         </div>
 
         <div class="col ml-1">
-            <table id="tablaCarrito" name="tablaCarrito" class="table text-center bordered">
-                <thead>
+            <table id="tablaCarrito" name="tablaCarrito" class="table text-center table-striped table-hover bordered">
+                <thead class="table-dark">
                     <tr>
-                        <th>❌</th>
                         <th hidden>ID</th>
                         <th>Producto</th>
                         <th>Costo</th>
                         <th>Cantidad</th>
                         <th>Subtotal</th>
+                        <th>❌</th>
                     </tr>
                 </thead>
                 <tbody name="tblProductos" id="tblProductos">
-
                 </tbody>
             </table>
         </div>
@@ -176,12 +180,12 @@
             carrito.forEach(element => {
                 var subtotal = parseFloat(element.Precio) * parseFloat(element.Cantidad);
                 inner += "<tr>" +
-                    "<th > <button class='btn btn-danger' onclick='quitarItem(" + cont +
-                    ")'>❌</button> </th>" +
                     "<th >" + element.Producto + "</th>" +
-                    "<th >" + element.Precio + "</th>" +
+                    "<th >$ " + element.Precio + "</th>" +
                     "<th >" + element.Cantidad + "</th>" +
-                    "<th >" + subtotal + "</th>" +
+                    "<th >$ " + subtotal + "</th>" +
+                    "<th > <button class='btn btn-danger' onclick='quitarItem(" + cont +
+                    ")'><i class=\"fas fa-trash\"></i></i></button> </th>" +
                     "</tr>";
                 total += subtotal;
                 cont++;

@@ -176,14 +176,18 @@
                 <hr class="hr-245">
                 <div class="col form-outline  m-2">
                     <table name="tablaProveedoresInactivos" id="tablaProveedoresInactivos">
-                        <thead class="table-danger text-center">
+                        <thead class="table-dark text-center">
+                            <th hidden>ID</th>
                             <th>PROVEEDOR</th>
                             <th>REPRESENTANTE</th>
                             <th>EMAIL</th>
                             <th>TELEFONO</th>
                             <th>RFC</th>
                             <th>DIRECCION</th>
-                            <th>ACCIONES</th>
+                            @if (\Auth::user()->id_rol == 1)
+                                <th>ACCIONES</th>
+                            @endif
+
                         </thead>
 
                         <tbody>
@@ -197,16 +201,18 @@
                                         <td>{{ $row->telefono }}</td>
                                         <td>{{ $row->RFC }}</td>
                                         <td>{{ $row->direccion }}</td>
-                                        <td>
-                                            @if (\Auth::user()->id_rol == 1)
+
+                                        @if (\Auth::user()->id_rol == 1)
+                                            <td>
                                                 {{ Form::model($modelo, ['route' => ['proveedores.update', $row->id], 'method' => 'PUT']) }}
                                                 {{ Form::hidden('_method', 'PUT') }}
                                                 <button type="submit" class="btn btn-warning" />
                                                 <i class='fas fa-undo'></i>
                                                 </button>
                                                 {{ Form::close() }}
-                                            @endif
-                                        </td>
+                                            </td>
+                                        @endif
+
                                     </tr>
                                 @endif
                             @empty
