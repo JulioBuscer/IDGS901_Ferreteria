@@ -70,7 +70,7 @@
 
                         <a class="nav-link active dark-grey-text font-weight-bold" data-toggle="tab" href="#panel5"
                             role="tab">
-                            Productos releevantes</a>
+                            Productos Relevantes</a>
 
                     </li>
                 </ul>
@@ -93,20 +93,35 @@
                     <input style="display:none;" name="price" value="{{$row->precio}}">
                     <input style="display:none;" name="name" value="{{$row->nombre}}">
                     <div class="card-body">
-                       
+
 
                         <h4 class="card-title "><strong name="name">{{$row->nombre}}</strong></h4>
                         <p class="card-text">
                             {{$row->descripcion}}
                         </p>
+                        @if($row->cantidad>0)
                         <p>Existencias: <strong name="name">{{$row->cantidad}}</strong></p>
+                        @else
+                        <p>Existencias: <strong style="color:red;" name="name">{{$row->cantidad}}</strong></p>
+                        @endif
                         @guest
                         @else
+                        @if(\Auth::user()->id_rol == 2)
+                        @if($row->cantidad>0)
                         <div class="col-4 form-outline">
                             <input type="number" min="1" max="{{$row->cantidad}}" name="quantity" value="1"
                                 class="form-control" />
                             <label class="form-label" for="quantity">Cantidad</label>
                         </div>
+                        @else
+                        <div class="col-4 form-outline">
+                            <input disabled="true" type="number" min="1" max="{{$row->cantidad}}" name="quantity" value="1"
+                                class="form-control" />
+                            <label class="form-label" for="quantity">Cantidad</label>
+                        </div>
+                        @endif
+                        @endif
+
                         @endguest
                     </div>
                     <div class="card-footer">
@@ -117,13 +132,18 @@
                                 </p>
                             </div>
                             @guest
-                            
+
                             @else
+                            @if(\Auth::user()->id_rol == 2)
+                            @if($row->cantidad>0)
                             <div class="col-6">
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Agregar</button>
                                 </div>
                             </div>
+                            @else
+                            @endif
+                            @endif
                             @endguest
                         </div>
                     </div>

@@ -61,17 +61,31 @@
                             </tr>
                         </tbody>
                     </table>
+                    {{Form::open(["url"=>"venta_terminada"])}}
+                    <input type="number" name="subtotal" style="display:none"
+                        value="{{Cart::getSubTotal()-Cart::getSubTotal()*.16}}">
+                    <input type="number" name="iva" style="display:none" value="{{Cart::getSubTotal()*.16}}">
                     <div class="col form-outline  m-2">
-                    {{-- Utilizamos la libreria Collective para el lavel y el Select, es importante el id para el uso del Select2 --}}
-                    {!! Form::label('selectCliente', 'Clientes', ['class' => 'form-control']) !!}
-                    {!! Form::select('selectCliente', $clientes, null, ['class' => 'form-control', 'id' => 'selectCliente', 'onchange' => '', 'required']) !!}
-                    {{-- Implementamos los scripts para absorber la libreria Select 2 --}}
-                    @push('scripts')
+                        <select name="selectCliente" id="selectCliente" style="width: 50vh" required>
+                            @forelse ($clientes as $row)
+                            <option value="{{ $row->id}}">{{ $row->nombre }}</option>
+                            @empty
+
+                            @endforelse
+                        </select>
+
+                        @push('scripts')
                         <script>
-                            $('#selectCliente').select2({});
+                        $('#selectCliente').select2({});
                         </script>
-                    @endpush
-                </div>
+                        @endpush
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-color-2" />
+                        <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                    {{Form::close()}}
                     <p class="card-text">
                     </p>
                 </div>
