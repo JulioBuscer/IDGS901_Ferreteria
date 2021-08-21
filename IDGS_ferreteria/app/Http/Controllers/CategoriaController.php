@@ -52,7 +52,7 @@ class CategoriaController extends Controller
         $registroCategorias->descripcion = $request->descripcionCategoria;
 
         $registroCategorias->save();
-        Session::flash('message', 'usuario creado!');
+        Session::flash('message', 'Categoria creada!');
         return redirect::to('Categorias');
     }
 
@@ -102,7 +102,7 @@ class CategoriaController extends Controller
         $actualCat->descripcion = $request->descripcionCat;
 
         $actualCat->save();
-        Session::flash('message', 'usuario creado!');
+        Session::flash('message', 'Categoria Editada!');
         return redirect::to('Categorias');
     }
 
@@ -118,7 +118,7 @@ class CategoriaController extends Controller
         $borrarCategoria->delete();
 
 
-        Session::flash('message', 'usuario eliminado!');
+        Session::flash('message', 'Categoria Eliminada!');
         return redirect::to('Categorias');
     }
 }

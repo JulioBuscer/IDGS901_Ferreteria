@@ -19,16 +19,16 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $sql = 'SELECT * FROM producto WHERE active = 1';
         $table = Db::select($sql);
         $sql2 = 'SELECT * FROM producto WHERE active = 0';
         $table2 = Db::select($sql2);
         $select = CategoriaModel::all();
+        $prov = Proveedor::all();
 
-        
 
-        return view('productos.vista', compact('table', 'table2','select'));
+        return view('productos.vista', compact('table', 'table2', 'select','prov'));
     }
 
     /**
@@ -60,7 +60,7 @@ class ProductosController extends Controller
 
         DB::beginTransaction();
 
-        $registroProductos =new ProductoModel();
+        $registroProductos = new ProductoModel();
         $registroProductos->nombre = $request->nombreProducto;
         $registroProductos->descripcion = $request->txtDescripcion;
         $registroProductos->precio = $request->txtPrecio;
@@ -73,7 +73,7 @@ class ProductosController extends Controller
 
         DB::commit();
 
-        Session::flash('message','Producto creado!');
+        Session::flash('message', 'Producto creado!');
         return redirect::to('Productos');
     }
 
@@ -101,7 +101,7 @@ class ProductosController extends Controller
         $del->active = 1;
 
         $del->save();
-        Session::flash('message','estatus activo!');
+        Session::flash('message', 'estatus activo!');
         return redirect::to('Productos');
     }
 
@@ -112,7 +112,7 @@ class ProductosController extends Controller
      * @param  \App\Models\ProductoModel  $productoModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $validateData = $request->validate([
             'idProd' => 'required',
@@ -140,7 +140,7 @@ class ProductosController extends Controller
         DB::commit();
 
 
-        Session::flash('message','Producto editado!');
+        Session::flash('message', 'Producto editado!');
         return redirect::to('Productos');
         //
 
@@ -159,7 +159,7 @@ class ProductosController extends Controller
         $del->active = 0;
 
         $del->save();
-        Session::flash('message','estatus desactivado!');
+        Session::flash('message', 'estatus desactivado!');
         return redirect::to('Productos');
     }
 }

@@ -43,12 +43,12 @@ class RolController extends Controller
             'descripcionrol' => 'required|min:3|max:50'
         ]);
 
-        $registroRol =new Rol();
+        $registroRol = new Rol();
         $registroRol->nombre = $request->nombrerol;
         $registroRol->descripcion = $request->descripcionrol;
 
         $registroRol->save();
-        Session::flash('message','usuario creado!');
+        Session::flash('message', 'Rol Creado!');
         return redirect::to('Roles');
     }
 
@@ -84,7 +84,7 @@ class RolController extends Controller
     public function update(Request $request, $id)
     {
         $validateData = $request->validate([
-            'idCat'=> 'required',
+            'idCat' => 'required',
             'nombrerol1' => 'required|min:3|max:30',
             'descripcionRol1' => 'required|min:3|max:50'
         ]);
@@ -94,7 +94,7 @@ class RolController extends Controller
         $actualCat->descripcion = $request->descripcionRol1;
 
         $actualCat->save();
-        Session::flash('message','Rol actulizado!');
+        Session::flash('message', 'Rol actulizado!');
         return redirect::to('Roles');
     }
 
@@ -109,7 +109,7 @@ class RolController extends Controller
         $borrarRol = Rol::find($id);
         $borrarRol->delete();
 
-        Session::flash('message','Rol eliminado!');
+        Session::flash('message', 'Rol eliminado!');
         return redirect::to('Roles');
     }
 }

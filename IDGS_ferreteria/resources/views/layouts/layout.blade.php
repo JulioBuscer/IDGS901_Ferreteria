@@ -188,23 +188,65 @@
                                             </li>
 
                                         @else
+                                            @if (\Auth::user())
+                                                @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 3)
 
-                                            @if (\Auth::user()->id_rol == 1 or \Auth::user()->id_rol == 2)
+                                                    <li class="nav-item">
+                                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                            href="{{ URL::to('Productos') }}">
+                                                            Productos
+                                                            <span class="sr-only">(current)</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                            href="{{ URL::to('proveedores') }}">
+                                                            Proveedores
+                                                            <span class="sr-only">(current)</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                            href="{{ URL::to('compras') }}">
+                                                            Compras
+                                                            <span class="sr-only">(current)</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                            href="{{ URL::to('Empleados') }}">
+                                                            Empleados
+                                                            <span class="sr-only">(current)</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            @endif
+
+                                            <li class="nav-item">
+                                                <a class="nav-link waves-effect waves-light white-text font-weight-bold"
+                                                    href="{{ URL::to('Clientes') }}">
+                                                    Clientes
+                                                    <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
+
+                                            @if (\Auth::user()->id_rol == 1)
                                                 <li class="nav-item">
                                                     <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                        href="{{ URL::to('proveedores') }}">
-                                                        Proveedores
+                                                        href="{{ URL::to('Roles') }}">
+                                                        Roles
                                                         <span class="sr-only">(current)</span>
                                                     </a>
                                                 </li>
+
                                                 <li class="nav-item">
                                                     <a class="nav-link waves-effect waves-light white-text font-weight-bold"
-                                                        href="{{ URL::to('compras') }}">
-                                                        Compras
+                                                        href="{{ URL::to('Categorias') }}">
+                                                        Categorias
                                                         <span class="sr-only">(current)</span>
                                                     </a>
                                                 </li>
-
                                             @endif
                                             @if (!Cart::isEmpty())
                                                 <li class="nav-item">

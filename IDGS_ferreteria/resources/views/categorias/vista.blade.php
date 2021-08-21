@@ -2,6 +2,27 @@
 
 
 @section('content')
+    @if (Session::has('message'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: "{{ Session::get('message') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
+    @endif
+    @if (sizeof($errors) > 0)
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: '{{ HTML::ul($errors->all()) }}'
+            })
+        </script>
+
+    @endif
     <div class="m-5">
 
         <!-- Tabs navs -->

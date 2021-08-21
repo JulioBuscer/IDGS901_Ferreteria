@@ -74,7 +74,7 @@ class ClienteController extends Controller
 
         DB::commit();
 
-        Session::flash('message', 'Producto creado!');
+        Session::flash('message', 'Cliente creado!');
         return redirect::to('Clientes');
     }
 
@@ -86,7 +86,6 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        
     }
 
     /**
@@ -101,7 +100,7 @@ class ClienteController extends Controller
         $del->active = 1;
 
         $del->save();
-        Session::flash('message', 'estatus activo!');
+        Session::flash('message', 'Cliente activo!');
         return redirect::to('Clientes');
     }
 
@@ -134,7 +133,7 @@ class ClienteController extends Controller
 
 
         DB::commit();
-        Session::flash('message','Producto creado!');
+        Session::flash('message', 'Cliente Actualizado!');
         return redirect::to('Clientes');
     }
 
@@ -150,10 +149,7 @@ class ClienteController extends Controller
         $del->active = 0;
 
         $del->save();
-        Session::flash('message','estatus activo!');
+        Session::flash('message', 'Cliente Eliminado!');
         return redirect::to('Clientes');
     }
-
-
-
 }

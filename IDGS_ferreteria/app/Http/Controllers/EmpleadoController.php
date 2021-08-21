@@ -19,13 +19,13 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $sql = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 1;';
+        $sql = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 1 ORDER BY id ASC;';
         $table = Db::select($sql);
-        $sql2 = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 0;';
+        $sql2 = 'SELECT u.id,u.email,u.fotografia,u.password,p.id as idPersona, p.nombre, p.apellidoP,p.apellidoM,p.telefono,r.id  as idRol, r.nombre as nombreRol, r.descripcion FROM users AS u INNER JOIN persona AS p ON (u.id_persona = p.id) INNER JOIN rol AS r ON (u.id_rol = r.id) WHERE active = 0  ORDER BY id ASC;';
         $table2 = Db::select($sql2);
         $select = Rol::all();
 
-        return view('empleados.vista', compact('table','table2','select'));
+        return view('empleados.vista', compact('table', 'table2', 'select'));
     }
 
     /**
@@ -60,19 +60,18 @@ class EmpleadoController extends Controller
 
         DB::beginTransaction();
 
-        $registroPersona =new Persona();
+        $registroPersona = new Persona();
         $registroPersona->nombre = $request->nombre;
         $registroPersona->apellidoP = $request->App;
         $registroPersona->apellidoM = $request->Apm;
         $registroPersona->telefono = $request->tel;
         $registroPersona->save();
 
-        $registroEmpleado =new Empleado();
+        $registroEmpleado = new Empleado();
         $registroEmpleado->name = $request->nombre;
         $registroEmpleado->email = $request->email;
-        if($request->password){
+        if ($request->password) {
             $registroEmpleado->password = bcrypt($request->password);
-
         }
         $registroEmpleado->active = "1";
         $registroEmpleado->token = "1";
@@ -84,7 +83,7 @@ class EmpleadoController extends Controller
 
         DB::commit();
 
-        Session::flash('message','Producto creado!');
+        Session::flash('message', 'Empleado creado!');
         return redirect::to('Empleados');
     }
 
@@ -111,7 +110,7 @@ class EmpleadoController extends Controller
         $del->active = 1;
 
         $del->save();
-        Session::flash('message','estatus activo!');
+        Session::flash('message', 'Empleado activo!');
         return redirect::to('Empleados');
     }
 
@@ -132,7 +131,7 @@ class EmpleadoController extends Controller
             'email1' => 'required',
             'slcRol1' => 'required'
         ]);
-        
+
         DB::beginTransaction();
 
         $registroPersona = Persona::find($request->idPer);
@@ -142,12 +141,11 @@ class EmpleadoController extends Controller
         $registroPersona->telefono = $request->tel1;
         $registroPersona->save();
 
-        $registroEmpleado =Empleado::find($id);
+        $registroEmpleado = Empleado::find($id);
         $registroEmpleado->name = $request->nombre1;
         $registroEmpleado->email = $request->email1;
-        if($request->password1){
+        if ($request->password1) {
             $registroEmpleado->password = bcrypt($request->password1);
-
         }
         $registroEmpleado->active = "1";
         $registroEmpleado->token = "1";
@@ -159,7 +157,7 @@ class EmpleadoController extends Controller
 
         DB::commit();
 
-        Session::flash('message','Producto creado!');
+        Session::flash('message', 'Empleado Actualizado!');
         return redirect::to('Empleados');
     }
 
@@ -175,7 +173,7 @@ class EmpleadoController extends Controller
         $del->active = 0;
 
         $del->save();
-        Session::flash('message','estatus activo!');
+        Session::flash('message', 'Empleado Eliminado!');
         return redirect::to('Empleados');
     }
 }
